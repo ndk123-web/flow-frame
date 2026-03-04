@@ -1,43 +1,18 @@
-import { StrategyController } from "../core/Strategy/Strategy";
+import { LoadBalancingConfig } from "../core/Strategy/LoadBalancingConfig";
 
 class LoadBalancerModel {
   id: string;
   name: string;
+  strategy: LoadBalancingConfig;
+  type: string = "load-balancer";
 
-  // because when its 0 then -1+0 % 3 = 0 thats it the index we need to return 
-  count: number = -1; // for detecting the number of total count
-
-  algorithm: string = "round-robin"; // by default round-robin
-
-  constructor(id: string, name: string) {
+  constructor(id: string, name: string, strategy: LoadBalancingConfig) {
     this.id = id;
     this.name = name;
+    this.strategy = strategy;
   }
 
-  runLoadBalancer() {
-    const strategy = new StrategyController(this.id, this.name);
-
-    // get total servers from Graph Engine
-    // assume
-    const servers: any[] = ["S1", "S2", "S3"];
-    const server_to_index = strategy.selectServer(
-      servers,
-      this.count,
-      this.algorithm,
-    );
-
-    // it means illegal algorithm / servers
-    if (server_to_index == -1) {
-      return -1;
-    }
-
-    // name of that server that is ui that client see
-    const should_send_to = servers[server_to_index];
-
-    // increase load balancer count
-    this.count++;
-
-    // returns {to_name}
-    return should_send_to;
+  runLoadBalancer(serverIds: any[]) {
+    return this.strategy.selectServer(serverIds);
   }
 }
