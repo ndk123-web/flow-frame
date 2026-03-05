@@ -1,10 +1,12 @@
 import { LoadBalancingConfig } from "../core/Strategy/LoadBalancingConfig";
+import type { NodeInstance } from "../contracts";
 
-class LoadBalancerModel {
+// for the NodeRegistry we will store the instance of the LoadBalancerModel
+class LoadBalancerModel implements NodeInstance {
   id: string;
   name: string;
   strategy: LoadBalancingConfig;
-  type: string = "load-balancer";
+  type: string = "LOAD_BALANCER";
 
   constructor(id: string, name: string, strategy: LoadBalancingConfig) {
     this.id = id;

@@ -1,12 +1,18 @@
 import type { NodeId } from "../../types";
 
 class GraphManager {
+  id: string;
   Nodes: Map<NodeId, string>; // id -> name
   Edges: Map<NodeId, any[]>; // id -> [instanceOfNode1, instanceOfNode2]
 
-  constructor() {
+  // Overview:
+  // 1. Nodes: NodeId -> string(name)
+  // 2. Edges: NodeId -> NodeId[]
+  // 3. NodeRegistry: NodeId -> NodeInstance
+  constructor(id: string) {
+    this.id = id;
     this.Nodes = new Map<NodeId, string>();
-    this.Edges = new Map<NodeId, any[]>();
+    this.Edges = new Map<NodeId, NodeId[]>();
   }
 
   addNode(id: NodeId, name: string) {
