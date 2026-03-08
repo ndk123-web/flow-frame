@@ -11,6 +11,7 @@ import ServerModel from "@/engine/models/server";
 import ClientModel from "@/engine/models/Client";
 import RoundRobinStrategy from "@/engine/core/Strategy/RoundRobinStrategy";
 import ShortUniqueId from "short-unique-id";
+import { redirect } from "next/navigation";
 
 type Theme = "light" | "dark";
 
@@ -240,6 +241,7 @@ export default function Home() {
                 type="button"
                 whileHover={{ y: -2, scale: 1.01 }}
                 className="rounded-xl bg-gradient-to-r from-blue-500 to-violet-600 px-5 py-3 text-sm font-medium text-white shadow-[0_15px_40px_-20px_var(--glow)]"
+                onClick={() =>{redirect("/dashboard")}}
               >
                 Open Simulator
               </motion.button>
@@ -343,6 +345,7 @@ export default function Home() {
               <button
                 type="button"
                 className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5"
+                onClick={()=>{redirect("/dashboard")}}
               >
                 Open Simulator
               </button>
