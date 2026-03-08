@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlowFrame
 
-## Getting Started
+<p align="center">
+	<img
+		src="public/logo/flow-frame-dark.png"
+		alt="FlowFrame Logo"
+		width="150"
+		style="border-radius: 60%; border: 1px solid #2a2a2a; padding: 8px;"
+	/>
+</p>
 
-First, run the development server:
+Interactive distributed system simulator.
+
+## Quick Links
+
+- [Goal](#goal)
+- [How Engine Works](#how-engine-works)
+- [Run](#run)
+- [Tech](#tech)
+
+## Goal
+
+Build a developer-first tool to visually understand distributed system behavior,
+not just draw architecture diagrams.
+
+## How Engine Works
+
+1. GraphManager
+
+- Stores architecture as nodes + edges.
+- Example path: Client -> LoadBalancer -> Server1/Server2/Server3.
+
+2. NodeRegistry
+
+- Maps nodeId -> actual class instance.
+- Graph only knows structure; NodeRegistry gives behavior (LoadBalancerModel, ServerModel, ClientModel).
+- Simulation uses this to detect node type and run node-specific logic.
+
+3. Strategy Layer (RoundRobinStrategy)
+
+- Load balancer asks strategy: "next server konsa?"
+- Pointer rotates over available servers for fair distribution.
+
+4. SimulationManager
+
+- Runs request step-by-step.
+- Each hop becomes a frame object:
+  { requestId, from, to, timestamp }
+- Frames are generated in order and stored for UI playback.
+
+5. UI Playback
+
+- UI reads frames array and moves frameIndex over time.
+- Current frame decides active server highlight.
+- Animated packets + controls (Play/Pause/Next/Speed) visualize the same engine output.
+
+## Run
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js
+- Tailwind CSS
+- Framer Motion
