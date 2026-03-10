@@ -1,3 +1,5 @@
+import type { Edge, Node } from "@xyflow/react";
+
 type NodeId = string;
 
 type RequestPath = {
@@ -24,4 +26,10 @@ type Frame = {
   timestamp: number;
 };
 
-export type { NodeId, RequestPath, FrameObject };
+type SimBundle = {
+  frames: Frame[];
+  nodes: Node[];
+  edges: Edge[];
+};
+
+export type { NodeId, RequestPath, FrameObject, Frame, SimBundle };
