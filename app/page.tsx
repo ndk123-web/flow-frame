@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import ArchDiagram from "@/components/ArchDiagram";
 import { GraphManager } from "@/engine/core/Graph/graph";
@@ -212,14 +213,22 @@ export default function Home() {
       <div className="pointer-events-none absolute -left-24 top-[-120px] -z-10 h-[340px] w-[340px] rounded-full bg-blue-500/18 blur-[85px]" />
       <div className="pointer-events-none absolute -right-14 top-[220px] -z-10 h-[320px] w-[320px] rounded-full bg-violet-500/16 blur-[85px]" />
 
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
-        <div className="text-lg font-semibold tracking-tight">FlowFrame</div>
+      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
+        <div className="flex items-center rounded-full border border-[var(--border)] bg-[var(--surface)]/90 px-3 py-2 shadow-sm backdrop-blur">
+          <Image
+            src={theme === "dark" ? "/logo/flow-frame-dark.png" : "/logo/flow-frame-light.png"}
+            alt="FlowFrame"
+            width={50}
+            height={24}
+            priority
+          />
+        </div>
         <button
           type="button"
           onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-          className="rounded-full border border-[var(--border)] bg-[var(--surface)]/80 px-4 py-2 text-sm transition hover:-translate-y-0.5"
+          className="rounded-full border border-[var(--border)] bg-[var(--surface)]/80 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5"
         >
-          {theme === "dark" ? "Switch to Light" : "Switch to Dark"}
+          {theme === "dark" ? "Light Mode" : "Dark Mode"}
         </button>
       </header>
 
