@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { use, useEffect, useMemo, useState } from "react";
 import {
   BaseEdge,
@@ -22,6 +20,8 @@ import LoadBalancerModel from "@/engine/models/LoadBalancer";
 import ServerModel from "@/engine/models/server";
 import ClientModel from "@/engine/models/Client";
 import RoundRobinStrategy from "@/engine/core/Strategy/RoundRobinStrategy";
+import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
 
 type Theme = "light" | "dark";
 
@@ -337,35 +337,12 @@ export default function ScenarioPage({ params }: ScenarioPropsPage) {
       <div className="pointer-events-none absolute -left-20 top-[-120px] h-[300px] w-[300px] rounded-full bg-blue-500/12 blur-[80px]" />
       <div className="pointer-events-none absolute -right-16 top-[180px] h-[300px] w-[300px] rounded-full bg-violet-500/10 blur-[80px]" />
 
-      <header className="relative z-10 border-b border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-xl">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500/70 to-transparent" />
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center rounded-full border border-[var(--border)] bg-white px-3 py-1.5 shadow-sm">
-              <Image src="/logo/flow-frame-dark.png" alt="FlowFrame" width={100} height={22} priority />
-            </div>
-            <p className="hidden text-xs uppercase tracking-[0.15em] text-[color:var(--foreground)]/50 sm:block">
-              Simulation Dashboard
-            </p>
-          </div>
-
-          <nav className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-              className="rounded-full border border-[var(--border)] bg-[var(--surface)]/80 px-3.5 py-1.5 text-sm font-medium transition hover:-translate-y-0.5"
-            >
-              {theme === "dark" ? "Light" : "Dark"}
-            </button>
-            <Link
-              href="/"
-              className="rounded-full border border-[var(--border)] bg-[var(--surface)]/80 px-3.5 py-1.5 text-sm font-medium transition hover:-translate-y-0.5"
-            >
-              Home
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader
+        theme={theme}
+        onToggleTheme={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+        showHomeLink
+        badgeText="Scenario Playback"
+      />
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 py-6">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)]/75 px-4 py-3 backdrop-blur">
@@ -442,6 +419,10 @@ export default function ScenarioPage({ params }: ScenarioPropsPage) {
             <Background variant={BackgroundVariant.Dots} gap={18} size={1.1} color="rgba(100,116,139,0.24)" />
           </ReactFlow>
         </div>
+      </div>
+
+      <div className="relative z-10">
+        <SiteFooter />
       </div>
     </section>
   );

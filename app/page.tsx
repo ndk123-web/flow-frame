@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import ArchDiagram from "@/components/ArchDiagram";
+import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
 import { GraphManager } from "@/engine/core/Graph/graph";
 import { NodeRegistry } from "@/engine/core/Graph/nodeResgistry";
 import { SimulationManager } from "@/engine/core/Simulations/Simulation";
@@ -12,7 +13,7 @@ import ServerModel from "@/engine/models/server";
 import ClientModel from "@/engine/models/Client";
 import RoundRobinStrategy from "@/engine/core/Strategy/RoundRobinStrategy";
 import ShortUniqueId from "short-unique-id";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type Theme = "light" | "dark";
 
@@ -187,6 +188,8 @@ function InteractivePreview() {
 }
 
 export default function Home() {
+  const router = useRouter();
+
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === "undefined") {
       return "dark";
@@ -213,24 +216,10 @@ export default function Home() {
       <div className="pointer-events-none absolute -left-24 top-[-120px] -z-10 h-[340px] w-[340px] rounded-full bg-blue-500/18 blur-[85px]" />
       <div className="pointer-events-none absolute -right-14 top-[220px] -z-10 h-[320px] w-[320px] rounded-full bg-violet-500/16 blur-[85px]" />
 
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
-        <div className="flex items-center rounded-full border border-[var(--border)] bg-[var(--surface)]/90 px-3 py-2 shadow-sm backdrop-blur">
-          <Image
-            src={theme === "dark" ? "/logo/flow-frame-dark.png" : "/logo/flow-frame-light.png"}
-            alt="FlowFrame"
-            width={50}
-            height={24}
-            priority
-          />
-        </div>
-        <button
-          type="button"
-          onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-          className="rounded-full border border-[var(--border)] bg-[var(--surface)]/80 px-4 py-2 text-sm font-medium transition hover:-translate-y-0.5"
-        >
-          {theme === "dark" ? "Light Mode" : "Dark Mode"}
-        </button>
-      </header>
+      <SiteHeader
+        theme={theme}
+        onToggleTheme={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+      />
 
       <section className="mx-auto grid w-full max-w-6xl gap-12 px-6 pb-14 pt-4 lg:grid-cols-[1.05fr_1fr] lg:items-center">
         <Reveal>
@@ -250,7 +239,9 @@ export default function Home() {
                 type="button"
                 whileHover={{ y: -2, scale: 1.01 }}
                 className="rounded-xl bg-gradient-to-r from-blue-500 to-violet-600 px-5 py-3 text-sm font-medium text-white shadow-[0_15px_40px_-20px_var(--glow)]"
-                onClick={() =>{redirect("/dashboard")}}
+                onClick={() => {
+                  router.push("/scenarios/simple-load-balancer");
+                }}
               >
                 Open Simulator
               </motion.button>
@@ -258,6 +249,9 @@ export default function Home() {
                 type="button"
                 whileHover={{ y: -2 }}
                 className="rounded-xl border border-[var(--border)] bg-[var(--surface)]/80 px-5 py-3 text-sm font-medium"
+                onClick={() => {
+                  router.push("/scenarios/simple-load-balancer");
+                }}
               >
                 View Demo
               </motion.button>
@@ -354,7 +348,9 @@ export default function Home() {
               <button
                 type="button"
                 className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5"
-                onClick={()=>{redirect("/dashboard")}}
+                onClick={() => {
+                  router.push("/scenarios/simple-load-balancer");
+                }}
               >
                 Open Simulator
               </button>
@@ -369,14 +365,7 @@ export default function Home() {
         </section>
       </Reveal>
 
-      <footer className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-2 border-t border-[var(--border)] px-6 py-7 text-sm text-[color:var(--foreground)]/65">
-        <span>FlowFrame</span>
-        <div className="flex gap-5">
-          <a href="#">GitHub</a>
-          <a href="#">Docs</a>
-          <a href="#">Author</a>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
