@@ -280,7 +280,10 @@ export default function ScenarioPage({ params }: ScenarioPropsPage) {
     );
   }
 
+
+  // We only want to create the simulation bundle once when the component mounts, so we use useState with a function initializer to call the createSimulationBundle function. This way, the simulation is only created once and we can keep all the simulation state (frames, nodes, edges) in React state.
   const [{ frames, nodes, edges }] = useState<SimBundle>(createSimulationBundle);
+  
   const [frameIndex, setFrameIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [speed, setSpeed] = useState(1);
@@ -316,6 +319,7 @@ export default function ScenarioPage({ params }: ScenarioPropsPage) {
 
   const currentFrame = frames[frameIndex] ?? null;
 
+  // useMemo in react use for expensive calculation and return memoized value, it only recompute the memoized value when one of the dependencies has changed. This optimization helps to avoid expensive calculations on every render when the dependencies haven't changed.
   const animatedEdges = useMemo(() => {
     if (!currentFrame) {
       return edges;

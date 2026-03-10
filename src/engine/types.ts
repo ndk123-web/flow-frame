@@ -17,6 +17,7 @@ type FrameObject = {
   from: string;
   to: string;
   timestamp: number;
+  action?: string;
 };
 
 type Frame = {

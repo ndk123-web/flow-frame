@@ -60,6 +60,7 @@ class SimulationManager {
               from: this.from,
               to: String(selectedServer), // convert to string for storage
               timestamp: ++this.timestamp,
+              action: "load_balance", // add action to indicate load balancing
             });
             // Update the current node to the selected server
             request.path.push(this.from);
@@ -86,6 +87,7 @@ class SimulationManager {
         from: this.from,
         to: nextFirst,
         timestamp: ++this.timestamp,
+        action: "request_forward",
       });
 
       request.path.push(this.from);
