@@ -8,7 +8,9 @@ import ServerModel from "@/engine/models/server";
 import ClientModel from "@/engine/models/Client";
 import RoundRobinStrategy from "@/engine/core/Strategy/RoundRobinStrategy";
 
-export function createSimpleLoadBalancerSimulationBundle(): SimBundle {
+export function createSimpleLoadBalancerSimulationBundle(
+  hideResponse: boolean,
+): SimBundle {
   const graph = new GraphManager("graph-1");
   const registry = new NodeRegistry("registry-1");
   const simulation = new SimulationManager(graph, registry);
@@ -44,7 +46,7 @@ export function createSimpleLoadBalancerSimulationBundle(): SimBundle {
   registry.register(s3Id, s3);
 
   for (let i = 0; i < 3; i++) {
-    simulation.runTest(clientId);
+    simulation.runTest(clientId, hideResponse);
   }
 
   const flowNodes: Node[] = [

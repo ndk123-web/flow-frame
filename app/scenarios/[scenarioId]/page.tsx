@@ -56,6 +56,7 @@ function PacketEdge(props: EdgeProps) {
     data,
   } = props;
 
+  // we use getSmoothStepPath from reactflow to generate a smooth curved path between the source and target nodes. This function takes into account the positions and orientations of the source and target to create a visually appealing edge path for the animated packet to follow.
   const [edgePath] = getSmoothStepPath({
     sourceX,
     sourceY,
@@ -86,7 +87,11 @@ function PacketEdge(props: EdgeProps) {
         <circle
           key={`${packetDuration}-${isReverseMotion ? "rev" : "fwd"}`}
           r="5"
+
+          // we use different colors and drop shadow effects for forward vs reverse motion to help users visually distinguish between request and response flows in the simulation. Forward motions (requests) are styled with a violet color, while reverse motions (responses) are styled with an orange color. The drop shadow adds a glowing effect to the active packet, making it more visually prominent as it moves along the edge.
           fill={isReverseMotion ? "#f59e0b" : "#8b5cf6"}
+          
+          // we apply a drop shadow filter to the animated packet to make it stand out more against the background and edges. The color of the drop shadow corresponds to the type of motion (forward or reverse) to enhance visual clarity and help users quickly identify the flow of requests and responses in the simulation.
           style={{
             filter: isReverseMotion
               ? "drop-shadow(0 0 8px rgba(245,158,11,0.95))"
@@ -97,6 +102,8 @@ function PacketEdge(props: EdgeProps) {
             dur={`${packetDuration}s`}
             repeatCount="indefinite"
             path={edgePath}
+
+            // if it's a reverse motion, we want the animation to start from the end of the path and move backwards, so we set keyPoints to "1;0". If it's a forward motion, we want it to start from the beginning and move forwards, so we set keyPoints to "0;1". This allows us to use the same edgePath for both forward and reverse animations while controlling the direction of motion based on the type of frame being visualized.
             keyPoints={isReverseMotion ? "1;0" : "0;1"}
             keyTimes="0;1"
             calcMode="linear"
@@ -277,29 +284,36 @@ type ScenarioPropsPage = {
   params : Promise<{ scenarioId: string }>;
 }
 
+function GenerateFrames(hideResponse: boolean, scnenarioId: string): SimBundle {
+    const createSimulationBundle: any = ALL_SCENARIOS.get(scnenarioId)
+    if (!createSimulationBundle) {
+      return {
+        frames: [],
+        nodes: [],
+        edges: [],
+      }
+    }
+
+    return createSimulationBundle(hideResponse);
+}
+
 export default function ScenarioPage({ params }: ScenarioPropsPage) {
 
   // For simplicity, we're only supporting one scenario in this demo. In a real app, you might fetch scenario data from an API or filesystem based on the scenarioId.
   const { scenarioId } = use(params);
 
-  // This is a bit hacky, but it allows us to keep all the scenario creation logic in separate files while still using React state and hooks in this page component. Each scenario file exports a function that creates the simulation bundle (frames, nodes, edges) for that scenario, and we call it here based on the scenarioId.
-  const createSimulationBundle: any = ALL_SCENARIOS.get(scenarioId)
-
-  if (!createSimulationBundle) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">
-        <p className="text-lg text-[color:var(--foreground)]/75">Scenario not found.</p>
-      </div>
-    );
-  }
-
-
-  // We only want to create the simulation bundle once when the component mounts, so we use useState with a function initializer to call the createSimulationBundle function. This way, the simulation is only created once and we can keep all the simulation state (frames, nodes, edges) in React state.
-  const [{ frames, nodes, edges }] = useState<SimBundle>(createSimulationBundle);
-  
+  const [hideResponse, setHideResponse] = useState(true);
   const [frameIndex, setFrameIndex] = useState(0);
+
+  // useMemo ensures frames regenerate whenever hideResponse or scenarioId changes.
+  const { frames, nodes, edges } = useMemo(
+    () => GenerateFrames(hideResponse, scenarioId),
+    [hideResponse, scenarioId]
+  );
+
   const [isPlaying, setIsPlaying] = useState(true);
   const [speed, setSpeed] = useState(1);
+
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === "undefined") {
       return "dark";
@@ -328,12 +342,12 @@ export default function ScenarioPage({ params }: ScenarioPropsPage) {
     }, 1000 / speed);
 
     return () => clearInterval(id);
-  }, [isPlaying, frames.length, speed]);
+  }, [isPlaying, frames.length, speed, hideResponse]);
 
   // whenever speed changes always start from the first frame, this is because the frames are designed to be played at normal speed, if we change the speed in the middle of the playback, it might cause some frames to be skipped or played too fast, which can lead to a confusing visualization. By resetting to the first frame whenever the speed changes, we ensure that the simulation always starts from a consistent state and plays smoothly at the new speed.
   useEffect(() => {
     setFrameIndex(0);
-  }, [speed]);
+  }, [speed, hideResponse]);
 
   const currentFrame = frames[frameIndex] ?? null;
 
@@ -353,6 +367,8 @@ export default function ScenarioPage({ params }: ScenarioPropsPage) {
       : hasReverseEdge
         ? reverseEdgeId
         : directEdgeId;
+      
+    // If the current frame's from-to pair matches a direct edge, we consider it a forward motion. If it matches a reverse edge, we consider it a backward motion. This allows us to use different colors or animations for forward vs backward packet movements, which can help users understand the flow of requests and responses in the simulation more intuitively.
     const isReverseMotion = !hasDirectEdge && hasReverseEdge;
 
     return edges.map((edge) => ({
@@ -403,6 +419,11 @@ export default function ScenarioPage({ params }: ScenarioPropsPage) {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
+            {/* now we need input for the check whether hide response or not */}
+            <input type="checkbox" id="hideResponse" checked={hideResponse} onChange={() => {
+              setHideResponse((prev) => !prev);
+            } } className="accent-blue-500" />
+            <label htmlFor="hideResponse" className="text-sm text-[color:var(--foreground)]/75">Hide Response</label>
             <button
               type="button"
               onClick={() => {
@@ -411,7 +432,7 @@ export default function ScenarioPage({ params }: ScenarioPropsPage) {
               }}
               className="rounded-md border border-[var(--border)] px-3 py-1 text-sm"
             >
-              Reset
+              Debug
             </button>
             <button
               type="button"

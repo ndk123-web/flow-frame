@@ -99,10 +99,13 @@ class SimulationManager {
     }
   }
 
-  runTest(startNode: NodeId) {
+  runTest(startNode: NodeId, hideResponse: boolean) {
     const request_id = this.uid.rnd(10);
     const request_name = `Request_${request_id}`;
     const request = new RequestManager(request_id, request_name, startNode);
+
+    // record the index of the first frame for the current request, so that after the simulation is done, we can add backward frames accordingly
+    // initially 0 then updated to the index of the first frame for the current request after the first step is executed. This allows us to keep track of which frames belong to which request, which is crucial for adding backward frames correctly after the simulation is done.
     const forwardStartIndex = this.frames.length;
 
     // register the request in the registry
@@ -128,13 +131,19 @@ class SimulationManager {
       }
     }
 
+    if (hideResponse) {
+      return;
+    }
+    // after the simulation is done, we need to add backward frames for the current request
     const currentRequestForwardFrames = this.frames.slice(forwardStartIndex);
     this.addBackwardFrames(currentRequestForwardFrames);
   }
 
+  // for each forward frame, we add a corresponding backward frame with from and to reversed, and action set to "request_backward". This allows us to visualize the response flow in the simulation, which is crucial for understanding how requests are processed and how responses are generated in a distributed system.
   addBackwardFrames(forwardFrames: FrameObject[]) {
     const backwardFrames: FrameObject[] = [];
 
+    // we iterate the forward frames in reverse order to create backward frames, which will allow us to visualize the response flow in the correct order (i.e., the response for the last request will be visualized first, and so on).
     for (let i = forwardFrames.length - 1; i >= 0; i--) {
       const frame = forwardFrames[i];
       backwardFrames.push({
