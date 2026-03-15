@@ -29,7 +29,7 @@ class GraphManager {
     }
   }
 
-  getNextNodes(from: NodeId) {
+  getNextNodes(from: NodeId) : NodeId[] {
     return this.Edges.get(from) || [];
   }
 

@@ -11,26 +11,24 @@ type RequestPath = {
   currentNode: string;
 };
 
-type FrameObject = {
-  requestId: string;
-  requestName: string;
-  from: string;
-  to: string;
-  timestamp: number;
-  action?: string;
-  lookupKey?: string;
-  redisKeysSnapshot?: string[];
-};
+// type FrameObject = {
+//   requestId: string;
+//   requestName: string;
+//   from: string;
+//   to: string;
+//   timestamp: number;
+//   action?: string;
+//   lookupKey?: string;
+//   redisKeysSnapshot?: string[];
+// };
 
 type Frame = {
   requestId: string;
-  requestName?: string;
   from: string;
   to: string;
   timestamp: number;
-  action?: string;
-  lookupKey?: string;
-  redisKeysSnapshot?: string[];
+  action: string;
+  type?: string;
 };
 
 type SimBundle = {
@@ -39,4 +37,4 @@ type SimBundle = {
   edges: Edge[];
 };
 
-export type { NodeId, RequestPath, FrameObject, Frame, SimBundle };
+export type { NodeId, RequestPath, Frame, SimBundle };

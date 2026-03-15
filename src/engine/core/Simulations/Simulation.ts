@@ -1,23 +1,27 @@
 import { NodeId } from "../../types";
 import { GraphManager } from "../Graph/graph";
 import { RequestManager } from "../../models/Request";
-import type { FrameObject } from "../../types";
+import type { Frame } from "../../types";
 import { NodeRegistry } from "../Graph/nodeResgistry";
 import ShortUniqueId from "short-unique-id";
 import { NodeInstance } from "@/engine/contracts";
 import LoadBalancerModel from "@/engine/models/LoadBalancer";
 import RedisModel from "@/engine/models/Redis";
 import PostgresModel from "@/engine/models/Postgres";
+import { serverHooks } from "next/dist/server/app-render/entry-base";
+import ServerModel from "@/engine/models/server";
+import { time } from "console";
+import { data } from "framer-motion/client";
 
 class SimulationManager {
   graph: GraphManager;
   from: NodeId;
   to: NodeId;
-  frames: FrameObject[] = [];
+  frames: Frame[] = [];
   registry: NodeRegistry;
   uid: ShortUniqueId = new ShortUniqueId({ length: 10 });
   timestamp: number = 0;
-  dataToPass: { [key: string]: { [key: string]: any } };
+  payloadForRequest: { [key: string]: any } = {};
   redisLookupCursor: number = 0;
 
   constructor(
@@ -25,262 +29,256 @@ class SimulationManager {
     registry: NodeRegistry,
 
     // means the object.key is string and object.value.key is string and object.value.value can be anything, this is used to pass data from one node to another node in the simulation, for example, client can pass some data to server which will be stored in the registry and then server can pass the same data to redis cache or postgres database, this will help us to simulate cache hit and cache miss scenarios in the simple cache scenario
-    dataToPass: { [key: string]: { [key: string]: any } } = {},
+    payloadForRequest: { [key: string]: any } = {},
   ) {
     this.graph = graph;
     this.registry = registry;
     this.from = "";
     this.to = "";
-    this.dataToPass = dataToPass;
+    this.payloadForRequest = payloadForRequest;
   }
 
-  private pickRedisLookupKey(request: RequestManager): string | null {
-    const data = request.getRequestData();
-    const testCasesForRedis = data["testCasesForRedis"]?.data;
+  addFrame(from: NodeId, to: NodeId, action: string, requestId: string) {}
 
-    if (!Array.isArray(testCasesForRedis) || testCasesForRedis.length === 0) {
-      return null;
-    }
+  runSimulation() {
+    const requestId = this.uid.rnd(10);
+    const requestName = `Request-${requestId}`;
 
-    const key = String(
-      testCasesForRedis[this.redisLookupCursor % testCasesForRedis.length],
-    );
-    this.redisLookupCursor++;
-    return key;
-  }
-
-  private getNextNodeByType(fromNode: NodeId, nodeType: string): NodeId | null {
-    const nextNodes = this.graph.getNextNodes(fromNode);
-
-    for (const nodeId of nextNodes) {
-      const nodeInstance = this.registry.getInstance(nodeId);
-      if (nodeInstance?.type === nodeType) {
-        return nodeId;
-      }
-    }
-
-    return null;
-  }
-
-  // the logic is:
-  // we first compute all and store into the frameManager
-  // now ui will fetch accordingly to the frame path
-  step(request: RequestManager) {
-    this.from = request.currentNodeId;
-
-    if (request.direction === "forward") {
-      // before check current node is LOAD BALANCER, then implement load balancing logic
-
-      const currentNode: NodeInstance | null = this.registry.getInstance(
-        this.from,
-      );
-
-      if (currentNode?.type === "LOAD_BALANCER") {
-        // fetch all the servers
-
-        const servers = this.graph.getNextNodes(this.from);
-        if (servers.length <= 0) {
-          // no servers available, switch direction
-          request.direction = "backward";
-          return;
-        } else {
-          // implement load balancing logic
-          const selectedServer = (
-            currentNode as LoadBalancerModel
-          ).runLoadBalancer(servers);
-          if (
-            selectedServer === null ||
-            selectedServer === -1 ||
-            selectedServer === undefined
-          ) {
-            // no server available, switch direction
-            request.direction = "backward";
-            return;
-          } else {
-            this.frames.push({
-              requestId: request.id,
-              requestName: request.name,
-              from: this.from,
-              to: String(selectedServer), // convert to string for storage
-              timestamp: ++this.timestamp,
-              action: "load_balance", // add action to indicate load balancing
-            });
-            // Update the current node to the selected server
-            request.path.push(this.from);
-            request.currentNodeId = String(selectedServer);
-            return;
-          }
-        }
-      } else if (currentNode?.type === "SERVER") {
-        const redisNodeId = this.getNextNodeByType(this.from, "REDIS_CACHE");
-        const postgresNodeId = this.getNextNodeByType(
-          this.from,
-          "POSTGRES_DATABASE",
-        );
-
-        if (redisNodeId) {
-          const redisInstance = this.registry.getInstance(redisNodeId) as
-            | RedisModel
-            | null;
-          const lookupKey = this.pickRedisLookupKey(request);
-
-          if (redisInstance && lookupKey !== null) {
-            const cachedValue = redisInstance.getData(lookupKey);
-            const redisKeysSnapshot = Array.from(redisInstance.data.keys());
-
-            if (cachedValue !== null) {
-              this.frames.push({
-                requestId: request.id,
-                requestName: request.name,
-                from: this.from,
-                to: redisNodeId,
-                timestamp: ++this.timestamp,
-                action: "cache_hit",
-                lookupKey,
-                redisKeysSnapshot,
-              });
-
-              request.path.push(this.from);
-              request.currentNodeId = redisNodeId;
-              request.direction = "backward";
-              return;
-            }
-
-            if (postgresNodeId) {
-              const postgresInstance = this.registry.getInstance(postgresNodeId) as
-                | PostgresModel
-                | null;
-              const dbRecord = postgresInstance?.getRecord("users", lookupKey);
-
-              if (dbRecord !== null && dbRecord !== undefined) {
-                redisInstance.addData(lookupKey, dbRecord);
-              }
-
-              this.frames.push({
-                requestId: request.id,
-                requestName: request.name,
-                from: this.from,
-                to: postgresNodeId,
-                timestamp: ++this.timestamp,
-                action: "cache_miss_fallback",
-                lookupKey,
-                redisKeysSnapshot,
-              });
-
-              request.path.push(this.from);
-              request.currentNodeId = postgresNodeId;
-              request.direction = "backward";
-              return;
-            }
-
-            this.frames.push({
-              requestId: request.id,
-              requestName: request.name,
-              from: this.from,
-              to: redisNodeId,
-              timestamp: ++this.timestamp,
-              action: "cache_miss_no_fallback",
-              lookupKey,
-              redisKeysSnapshot,
-            });
-
-            request.path.push(this.from);
-            request.currentNodeId = redisNodeId;
-            request.direction = "backward";
-            return;
-          }
-        }
-      }
-
-      const nextNodes = this.graph.getNextNodes(this.from);
-
-      // if no next nodes, switch direction
-      if (nextNodes.length === 0) {
-        request.direction = "backward";
-        return;
-      }
-
-      const nextFirst = nextNodes[0];
-
-      this.frames.push({
-        requestId: request.id,
-        requestName: request.name,
-        from: this.from,
-        to: nextFirst,
-        timestamp: ++this.timestamp,
-        action: "request_forward",
-      });
-
-      request.path.push(this.from);
-      request.currentNodeId = nextFirst;
-    }
-  }
-
-  runTest(startNode: NodeId, hideResponse: boolean) {
-    const request_id = this.uid.rnd(10);
-    const request_name = `Request_${request_id}`;
-
-    // create a new request instance for the simulation, which will be used to track the current node, path, and direction of the request as it moves through the graph. This allows us to simulate the flow of a request through a distributed system, and to visualize how requests are processed and how responses are generated based on the structure of the graph and the behavior of the nodes.
+    // runSimulation Always creates a new Request For each simulation
     const request = new RequestManager(
-      request_id,
-      request_name,
-      startNode,
-      this.dataToPass,
+      requestId,
+      requestName,
+      this.from,
+      this.payloadForRequest,
     );
 
-    // record the index of the first frame for the current request, so that after the simulation is done, we can add backward frames accordingly
-    // initially 0 then updated to the index of the first frame for the current request after the first step is executed. This allows us to keep track of which frames belong to which request, which is crucial for adding backward frames correctly after the simulation is done.
-    const forwardStartIndex = this.frames.length;
+    // it gives the next nodeId's
+    const nextNodes = this.graph.getNextNodes(this.from);
 
-    // register the request in the registry
-    this.registry.register(request_id, request);
-
-    // run the simulation
-    while (true) {
-      const before = request.currentNodeId;
-
-      this.step(request);
-
-      // means we have reached the start node means there is something buggy
-      if (request.path.length === 0 && request.direction === "backward") {
-        break;
-      }
-
-      // if after step() currentNodeId and before are the same and direction is backward, it means we are stuck
-      if (
-        request.currentNodeId === before &&
-        request.direction === "backward"
-      ) {
-        break;
-      }
-    }
-
-    if (hideResponse) {
+    // if there is no next node then it means the simulation has reached the end and we can return the frames
+    if (nextNodes.length === 0) {
       return;
     }
-    // after the simulation is done, we need to add backward frames for the current request
-    const currentRequestForwardFrames = this.frames.slice(forwardStartIndex);
-    this.addBackwardFrames(currentRequestForwardFrames);
-  }
 
-  // for each forward frame, we add a corresponding backward frame with from and to reversed, and action set to "request_backward". This allows us to visualize the response flow in the simulation, which is crucial for understanding how requests are processed and how responses are generated in a distributed system.
-  addBackwardFrames(forwardFrames: FrameObject[]) {
-    const backwardFrames: FrameObject[] = [];
+    // TODO if there are nodes then get `from` Node
+    const fromNodeInstance = this.registry.getInstance(this.from);
 
-    // we iterate the forward frames in reverse order to create backward frames, which will allow us to visualize the response flow in the correct order (i.e., the response for the last request will be visualized first, and so on).
-    for (let i = forwardFrames.length - 1; i >= 0; i--) {
-      const frame = forwardFrames[i];
-      backwardFrames.push({
-        requestId: frame.requestId,
-        requestName: frame.requestName,
-        from: frame.to,
-        to: frame.from,
-        timestamp: ++this.timestamp,
-        action: "request_backward",
-      });
+    // 100% there will be an instance
+    if (!fromNodeInstance) {
+      return;
     }
 
-    this.frames.push(...backwardFrames);
+    // get the type of the node
+    const nodeType = fromNodeInstance.type;
+
+    switch (nodeType) {
+      case "CLIENT":
+        // for client node we will directly move to the next node and create a frame for it
+        const toNodeId = nextNodes[0];
+        this.frames.push({
+          requestId: request.id,
+          from: this.from,
+          to: toNodeId,
+          timestamp: this.timestamp++,
+          action: "CLIENT_SEND_REQUEST",
+        });
+
+        // move the request to the next node
+        request.currentNodeId = toNodeId;
+
+        // add last node
+        request.context["lastNode"] = this.from;
+
+        // update the from and to for the next iteration
+        this.from = toNodeId;
+        this.to = "";
+        break;
+
+      // TODO for server node we will check the payload and then decide whether to move to the next node or not, for example, if the payload has some data then we can move to the next node which is redis cache and if the payload does not have any data then we can move to the next node which is postgres database, this will help us to simulate cache hit and cache miss scenarios in the simple cache scenario
+      case "LOAD_BALANCER":
+        // we already have the nextNodes
+        const lbInstance = this.registry.getInstance(
+          this.from,
+        ) as LoadBalancerModel;
+
+        // if there are multiple next nodes then we will use the load balancer algorithm to select the next node, for example, we can use round robin algorithm to select the next node from the list of next nodes, this will help us to simulate load balancing scenarios in the simulation
+        if (nextNodes.length === 0) {
+          return;
+        }
+
+        // for now we will directly select the first node from the list of next nodes, but in future we can implement different load balancing algorithms to select the next node from the list of next nodes, this will help us to simulate load balancing scenarios in the simulation
+        const selectedNodeId = lbInstance.runLoadBalancer(nextNodes);
+        this.frames.push({
+          requestId: request.id,
+          from: this.from,
+          to: selectedNodeId,
+          timestamp: this.timestamp++,
+          action: "LOAD_BALANCER_FORWARD_REQUEST",
+        });
+
+        // move the request to the next node
+        request.currentNodeId = selectedNodeId;
+        break;
+
+      case "SERVER":
+        // here so many things can happen, for example, server can process the request and then move to the next node which is redis cache or postgres database based on the payload, this will help us to simulate different scenarios in the simulation, for now we will directly move to the next node without processing the request, but in future we can implement different processing logic based on the payload and then decide whether to move to the next node which is redis cache or postgres database, this will help us to simulate cache hit and cache miss scenarios in the simple cache scenario
+        const serverInstance = this.registry.getInstance(
+          this.from,
+        ) as ServerModel;
+
+        // before processing the request we will check whether the server can accept the request or not based on its load and capacity, if the server cannot accept the request then we can drop the request and create a frame for it, this will help us to simulate server overload scenarios in the simulation
+        if (!serverInstance.canAccepthRequest()) {
+          // if server cannot accept the request then we can drop the request and create a frame for it
+          this.frames.push({
+            requestId: request.id,
+            from: this.from,
+            to: "",
+            timestamp: this.timestamp++,
+            action: "SERVER_REJECT_REQUEST",
+          });
+          return;
+        }
+
+        // if server can accept the request then we will assign the request to the server and then move to the next node
+        if (request.context["redisCacheResult"] === "CACHE_HIT") {
+          this.frames.push({
+            requestId: request.id,
+            from: this.from,
+
+            // if there is a cache hit then we will move to the next node which is server node
+            to: request.path[this.timestamp - 1].to, // get the last node from the request path which will be server node
+            timestamp: this.timestamp++,
+            action: "SERVER_SEND_RESPONSE",
+          });
+
+          // move the request to the next node
+          request.context["lastNode"] = this.from;
+          return;
+        } else if (request.context["redisCacheResult"] === "CACHE_MISS") {
+          // check whether there is postgres database node in the next nodes or not, if there is postgres database node then we will move to the postgres database node and if there is no postgres database node then we will move to the next node which is server node, this will help us to simulate cache miss scenario in the simple cache scenario
+          const postgresInstance: boolean = nextNodes.some((nodeId) => {
+            const nodeInstance = this.registry.getInstance(
+              nodeId,
+            ) as PostgresModel;
+            return nodeInstance.type === "POSTGRES";
+          });
+
+          if (postgresInstance) {
+            const postgresNodeId = nextNodes.find((nodeId) => {
+              const nodeInstance = this.registry.getInstance(
+                nodeId,
+              ) as PostgresModel;
+              return nodeInstance.type === "POSTGRES";
+            });
+
+            // get instance of postgres database node
+            const postgresNodeInstance: PostgresModel =
+              this.registry.getInstance(postgresNodeId!) as PostgresModel;
+
+            // check whether the postgres database node has the data or not based on the payload, if the postgres database node has the data then we can move to the next node which is server node and if the postgres database node does not have the data then we can drop the request and create a frame for it, this will help us to simulate cache miss scenario in the simple cache scenario
+            const databaseName = "DEFAULT";
+            const key = request.payload["lookUpKey"] as string;
+            const data = postgresNodeInstance.getRecord(databaseName, key);
+
+            // if there is data in the postgres database node then we can move to the next node which is server node
+            // it means the data is not there inside the postgres database
+            if (data === null) {
+              // if there is no data in the postgres database node then we can drop the request and create a frame for it
+              this.frames.push({
+                requestId: request.id,
+                from: this.from,
+                to: request.context.lastNode, // get the last node from the request path which will be server node
+                timestamp: this.timestamp++,
+                action: "SERVER_SEND_RESPONSE_DATA_NOT_FOUND",
+              });
+              request.context["lastNode"] = this.from;
+              return;
+            }
+
+            // if there is data in the postgres database node then we can move to the next node which is server node
+            else {
+              this.frames.push({
+                requestId: request.id,
+                from: this.from,
+                to: request.path[request.path.length - 1].to, // get the last node from the request path which will be server node
+                timestamp: this.timestamp++,
+                action: "SERVER_SEND_RESPONSE",
+              });
+              request.context["lastNode"] = this.from;
+              return;
+            }
+          }
+        }
+
+        const isHaveRedis = nextNodes.some((nodeId) => {
+          const nodeInstance = this.registry.getInstance(nodeId) as
+            | PostgresModel
+            | RedisModel;
+          return nodeInstance.type === "REDIS";
+        });
+
+        // priority will be logically to the redis cache then postgres
+        const task = request.task;
+        switch (task) {
+          // for example, if the task is to get some data then we will first check whether the next nodes have redis cache or not and if they have redis cache then we will move to the redis cache node and if they do not have redis cache then we will move to the postgres database node, this will help us to simulate cache hit and cache miss scenarios in the simple cache scenario
+          case "GET_DATA":
+            // if there is redis cache then move to redis cache node
+            if (isHaveRedis) {
+              const redisNodeId = nextNodes.find((nodeId) => {
+                const nodeInstance = this.registry.getInstance(nodeId) as
+                  | PostgresModel
+                  | RedisModel;
+                return nodeInstance.type === "REDIS";
+              });
+
+              if (redisNodeId) {
+                this.frames.push({
+                  requestId: request.id,
+                  from: this.from,
+                  to: redisNodeId,
+                  timestamp: this.timestamp++,
+                  action: "SERVER_FORWARD_REQUEST_TO_REDIS",
+                });
+
+                // move the request to the redis cache node
+                request.currentNodeId = redisNodeId;
+              }
+            }
+        }
+
+      case "REDIS":
+        // for redis node we will check the payload and then decide whether to move to the next node or not, for example, if the payload has some data then we can move to the next node which is server and if the payload does not have any data then we can move to the next node which is postgres database, this will help us to simulate cache hit and cache miss scenarios in the simple cache scenario
+        const redisInstance = this.registry.getInstance(
+          this.from,
+        ) as RedisModel;
+
+        const payload = request.getPayload();
+        const lookUpKey = payload["redis"]["lookUpKey"] as string;
+
+        if (lookUpKey) {
+          const lookUpData = redisInstance.getData(lookUpKey);
+
+          if (lookUpData === null) {
+            // if there is a cache miss then we will move to the postgres database node
+            this.frames.push({
+              requestId: request.id,
+              from: this.from,
+              to: request.context["lastNode"], // get the last node from the request path which will be postgres database node
+              timestamp: this.timestamp++,
+              action: "REDIS_CACHE_MISS",
+            });
+          } else {
+            // if there is a cache hit then we will move to the next node which is server node
+            this.frames.push({
+              requestId: request.id,
+              from: this.from,
+              to: request.path[request.path.length - 1].to, // get the last node from the request path which will be server node
+              timestamp: this.timestamp++,
+              action: "REDIS_CACHE_HIT",
+            });
+          }
+        }
+    }
   }
 
   getFrames() {
