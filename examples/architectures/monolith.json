@@ -5,113 +5,126 @@
       "id": "client-1",
       "type": "customNode",
       "position": {
-        "x": 50,
-        "y": 250
+        "x": -140,
+        "y": 260
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
         "label": "Client 1",
-        "type": "client"
-      }
-    },
-    {
-      "id": "client-2",
-      "type": "customNode",
-      "position": {
-        "x": 50,
-        "y": 390
+        "type": "client",
+        "isActive": false,
+        "flavor": "browser"
       },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Client 2",
-        "type": "client"
-      }
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 180,
+        "height": 50
+      },
+      "selected": false,
+      "dragging": false
     },
     {
       "id": "lb-1",
       "type": "customNode",
       "position": {
-        "x": 240,
-        "y": 320
+        "x": 80,
+        "y": 340
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
         "label": "Load Balancer / Nginx",
-        "type": "load-balancer"
-      }
+        "type": "load-balancer",
+        "isActive": false,
+        "flavor": "generic"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 227,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
     },
     {
       "id": "server-1",
       "type": "customNode",
       "position": {
-        "x": 460,
-        "y": 320
+        "x": 380,
+        "y": 360
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
         "label": "Monolithic Server",
-        "type": "server"
-      }
+        "type": "server",
+        "isActive": false,
+        "flavor": "nodejs"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 199,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
     },
     {
       "id": "redis-1",
       "type": "customNode",
       "position": {
-        "x": 700,
-        "y": 120
+        "x": 720,
+        "y": 140
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
         "label": "Redis Session Cache",
-        "type": "redis"
-      }
+        "type": "redis",
+        "isActive": false,
+        "flavor": "redis"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 218,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
     },
     {
       "id": "db-1",
       "type": "customNode",
       "position": {
-        "x": 700,
-        "y": 320
+        "x": 840,
+        "y": 340
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
         "label": "Postgres Primary DB",
-        "type": "postgres"
-      }
-    },
-    {
-      "id": "elastic-1",
-      "type": "customNode",
-      "position": {
-        "x": 940,
-        "y": 420
+        "type": "postgres",
+        "isActive": false,
+        "flavor": "postgres"
       },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Elasticsearch Cluster",
-        "type": "postgres"
-      }
-    },
-    {
-      "id": "sendgrid-1",
-      "type": "customNode",
-      "position": {
-        "x": 940,
-        "y": 220
+      "style": {
+        "borderRadius": "8px"
       },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "SendGrid API Gateway",
-        "type": "server"
-      }
+      "measured": {
+        "width": 217,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
     }
   ],
   "edges": [
@@ -119,56 +132,198 @@
       "id": "c1-lb",
       "source": "client-1",
       "target": "lb-1",
-      "type": "packet"
-    },
-    {
-      "id": "c2-lb",
-      "source": "client-2",
-      "target": "lb-1",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     },
     {
       "id": "lb-s",
       "source": "lb-1",
       "target": "server-1",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     },
     {
       "id": "s-r",
       "source": "server-1",
       "target": "redis-1",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     },
     {
       "id": "s-d",
       "source": "server-1",
       "target": "db-1",
-      "type": "packet"
-    },
-    {
-      "id": "s-e",
-      "source": "server-1",
-      "target": "elastic-1",
-      "type": "packet"
-    },
-    {
-      "id": "s-sg",
-      "source": "server-1",
-      "target": "sendgrid-1",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     }
   ],
   "nodeConfigs": {
     "server-1": {
-      "capacity": 100
+      "capacity": 100,
+      "tcpConnections": 10,
+      "prefetchLimit": 1,
+      "endpoints": {
+        "/api/v1/posts": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ],
+        "/api/v1/users": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ],
+        "/api/v1/getData": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ]
+      }
     },
     "db-1": {
+      "table": "users",
       "data": [
         {
           "key": "account_1",
           "val": "active"
         }
       ]
+    },
+    "client-1": {
+      "endpoint": "/api/v1/posts",
+      "method": "GET",
+      "lookupKey": "rohan",
+      "valetKeyFlow": false,
+      "fileName": "file.png",
+      "isThereFileToUpload": false,
+      "targetBucket": "media-uploads",
+      "body": "",
+      "requests": [
+        {
+          "endpoint": "/api/v1/posts",
+          "method": "GET",
+          "lookupKey": "rohan",
+          "fileName": "file.png",
+          "isThereFileToUpload": false,
+          "targetBucket": "media-uploads",
+          "body": ""
+        }
+      ]
+    },
+    "client-2": {
+      "endpoint": "/api/v1/posts",
+      "method": "GET",
+      "lookupKey": "rohan",
+      "valetKeyFlow": false,
+      "fileName": "file.png",
+      "isThereFileToUpload": false,
+      "targetBucket": "media-uploads",
+      "body": "",
+      "requests": [
+        {
+          "endpoint": "/api/v1/posts",
+          "method": "GET",
+          "lookupKey": "rohan",
+          "fileName": "file.png",
+          "isThereFileToUpload": false,
+          "targetBucket": "media-uploads",
+          "body": ""
+        }
+      ]
+    },
+    "lb-1": {
+      "strategy": "ROUND_ROBIN"
+    },
+    "redis-1": {
+      "data": [
+        {
+          "key": "rohan",
+          "val": "cached data for rohan"
+        },
+        {
+          "key": "john",
+          "val": "cached data for john"
+        }
+      ]
+    },
+    "elastic-1": {
+      "table": "users",
+      "data": [
+        {
+          "key": "doe",
+          "val": "db data for doe"
+        },
+        {
+          "key": "john",
+          "val": "db data for john"
+        },
+        {
+          "key": "rohan",
+          "val": "db data for rohan"
+        }
+      ]
+    },
+    "sendgrid-1": {
+      "capacity": 100,
+      "tcpConnections": 10,
+      "prefetchLimit": 1,
+      "endpoints": {
+        "/api/v1/posts": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ],
+        "/api/v1/users": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ],
+        "/api/v1/getData": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ]
+      }
     }
   }
 }

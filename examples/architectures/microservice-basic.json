@@ -5,29 +5,51 @@
       "id": "client-1",
       "type": "customNode",
       "position": {
-        "x": 50,
-        "y": 250
+        "x": -140,
+        "y": 160
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
         "label": "Client Browser",
-        "type": "client"
-      }
+        "type": "client",
+        "isActive": false,
+        "flavor": "browser"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 182,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
     },
     {
       "id": "gateway-1",
       "type": "customNode",
       "position": {
-        "x": 260,
-        "y": 250
+        "x": 100,
+        "y": 260
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
         "label": "Kong API Gateway",
-        "type": "api-gateway"
-      }
+        "type": "api-gateway",
+        "isActive": false,
+        "flavor": "generic"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 202,
+        "height": 50
+      },
+      "selected": false,
+      "dragging": false
     },
     {
       "id": "auth-srv",
@@ -40,8 +62,18 @@
       "targetPosition": "left",
       "data": {
         "label": "Auth Service",
-        "type": "server"
-      }
+        "type": "server",
+        "isActive": false,
+        "flavor": "nodejs"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 180,
+        "height": 50
+      },
+      "selected": false
     },
     {
       "id": "user-srv",
@@ -54,8 +86,18 @@
       "targetPosition": "left",
       "data": {
         "label": "User Service",
-        "type": "server"
-      }
+        "type": "server",
+        "isActive": false,
+        "flavor": "nodejs"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 180,
+        "height": 50
+      },
+      "selected": false
     },
     {
       "id": "order-srv",
@@ -68,50 +110,93 @@
       "targetPosition": "left",
       "data": {
         "label": "Order Service",
-        "type": "server"
-      }
+        "type": "server",
+        "isActive": false,
+        "flavor": "nodejs"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 180,
+        "height": 50
+      },
+      "selected": false
     },
     {
       "id": "auth-cache",
       "type": "customNode",
       "position": {
-        "x": 740,
-        "y": 90
+        "x": 780,
+        "y": 40
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
         "label": "Redis Session Store",
-        "type": "redis"
-      }
+        "type": "redis",
+        "isActive": false,
+        "flavor": "redis"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 213,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
     },
     {
       "id": "user-db",
       "type": "customNode",
       "position": {
-        "x": 740,
-        "y": 250
+        "x": 860,
+        "y": 220
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
         "label": "User Postgres DB",
-        "type": "postgres"
-      }
+        "type": "postgres",
+        "isActive": false,
+        "flavor": "postgres"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 199,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
     },
     {
       "id": "order-db",
       "type": "customNode",
       "position": {
-        "x": 740,
-        "y": 410
+        "x": 860,
+        "y": 360
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
         "label": "Order Postgres DB",
-        "type": "postgres"
-      }
+        "type": "postgres",
+        "isActive": false,
+        "flavor": "postgres"
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 205,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
     }
   ],
   "edges": [
@@ -119,52 +204,280 @@
       "id": "c-g",
       "source": "client-1",
       "target": "gateway-1",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     },
     {
       "id": "g-as",
       "source": "gateway-1",
       "target": "auth-srv",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     },
     {
       "id": "g-us",
       "source": "gateway-1",
       "target": "user-srv",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     },
     {
       "id": "g-os",
       "source": "gateway-1",
       "target": "order-srv",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     },
     {
       "id": "as-ac",
       "source": "auth-srv",
       "target": "auth-cache",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     },
     {
       "id": "us-udb",
       "source": "user-srv",
       "target": "user-db",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     },
     {
       "id": "os-odb",
       "source": "order-srv",
       "target": "order-db",
-      "type": "packet"
+      "type": "packet",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#60a5fa"
+      },
+      "style": {
+        "stroke": "#475569",
+        "strokeWidth": 1.8
+      }
     }
   ],
   "nodeConfigs": {
     "gateway-1": {
+      "strategy": "ROUND_ROBIN",
       "routes": {
         "/auth": "auth-srv",
         "/users": "user-srv",
         "/orders": "order-srv"
+      },
+      "serviceMapping": {
+        "user-srv": "user-srv",
+        "order-srv": "order-srv"
       }
+    },
+    "client-1": {
+      "endpoint": "/api/v1/posts",
+      "method": "GET",
+      "lookupKey": "rohan",
+      "valetKeyFlow": false,
+      "fileName": "file.png",
+      "isThereFileToUpload": false,
+      "targetBucket": "media-uploads",
+      "body": "",
+      "requests": [
+        {
+          "endpoint": "/users",
+          "method": "GET",
+          "lookupKey": "rohan",
+          "fileName": "file.png",
+          "isThereFileToUpload": false,
+          "targetBucket": "media-uploads",
+          "body": ""
+        },
+        {
+          "endpoint": "/orders",
+          "method": "GET",
+          "lookupKey": "key-2",
+          "fileName": "file-2.png",
+          "isThereFileToUpload": true,
+          "targetBucket": "media-uploads"
+        },
+        {
+          "endpoint": "/auth",
+          "method": "GET",
+          "lookupKey": "key-3",
+          "fileName": "file-3.png",
+          "isThereFileToUpload": true,
+          "targetBucket": "media-uploads"
+        }
+      ]
+    },
+    "auth-srv": {
+      "capacity": 100,
+      "tcpConnections": 10,
+      "prefetchLimit": 1,
+      "endpoints": {
+        "/auth": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ],
+        "/api/v1/users": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ],
+        "/api/v1/getData": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ]
+      }
+    },
+    "user-srv": {
+      "capacity": 100,
+      "tcpConnections": 10,
+      "prefetchLimit": 1,
+      "endpoints": {
+        "/users": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ],
+        "/api/v1/users": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ],
+        "/api/v1/getData": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ]
+      }
+    },
+    "order-srv": {
+      "capacity": 100,
+      "tcpConnections": 10,
+      "prefetchLimit": 1,
+      "endpoints": {
+        "/orders": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ],
+        "/api/v1/users": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ],
+        "/api/v1/getData": [
+          "GET",
+          "POST",
+          "PUT",
+          "DELETE",
+          "PATCH"
+        ]
+      }
+    },
+    "auth-cache": {
+      "data": [
+        {
+          "key": "rohan",
+          "val": "cached data for rohan"
+        },
+        {
+          "key": "john",
+          "val": "cached data for john"
+        }
+      ]
+    },
+    "user-db": {
+      "table": "users",
+      "data": [
+        {
+          "key": "doe",
+          "val": "db data for doe"
+        },
+        {
+          "key": "john",
+          "val": "db data for john"
+        },
+        {
+          "key": "rohan",
+          "val": "db data for rohan"
+        }
+      ]
+    },
+    "order-db": {
+      "table": "users",
+      "data": [
+        {
+          "key": "doe",
+          "val": "db data for doe"
+        },
+        {
+          "key": "john",
+          "val": "db data for john"
+        },
+        {
+          "key": "rohan",
+          "val": "db data for rohan"
+        }
+      ]
     }
   }
 }

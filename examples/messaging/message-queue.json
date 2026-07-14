@@ -2,59 +2,38 @@
   "version": "1.0",
   "nodes": [
     {
-      "id": "client-dzOkM6PT",
+      "id": "client-aq1tCpdJ",
       "type": "customNode",
       "position": {
-        "x": 290.3864027048779,
-        "y": 221.95348113663542
+        "x": -60,
+        "y": 100
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
-        "label": "Browser",
+        "label": "Client 1",
         "type": "client",
         "isActive": false,
-        "flavor": "nextjs"
+        "flavor": "vue"
       },
       "measured": {
         "width": 180,
         "height": 50
       },
-      "selected": false
+      "selected": false,
+      "dragging": false
     },
     {
-      "id": "api-gateway-6n69QEts",
+      "id": "server-MO605Q7t",
       "type": "customNode",
       "position": {
-        "x": 520,
-        "y": 280
+        "x": 160,
+        "y": 220
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
-        "label": "API Gateway 1",
-        "type": "api-gateway",
-        "isActive": false,
-        "flavor": "aws-apigw"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      },
-      "dragging": false,
-      "selected": false
-    },
-    {
-      "id": "server-Ya3ZmzBs",
-      "type": "customNode",
-      "position": {
-        "x": 800,
-        "y": 180
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Post",
+        "label": "Email Service",
         "type": "server",
         "isActive": false,
         "flavor": "nodejs"
@@ -63,57 +42,15 @@
         "width": 180,
         "height": 50
       },
-      "selected": false
+      "selected": false,
+      "dragging": false
     },
     {
-      "id": "server-NgXmlhch",
+      "id": "message-queue-P9LCZcX3",
       "type": "customNode",
       "position": {
-        "x": 820,
-        "y": 280
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Post",
-        "type": "server",
-        "isActive": false,
-        "flavor": "nodejs"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      },
-      "dragging": false,
-      "selected": false
-    },
-    {
-      "id": "server-tPQ0wVS8",
-      "type": "customNode",
-      "position": {
-        "x": 820,
-        "y": 440
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Post",
-        "type": "server",
-        "isActive": false,
-        "flavor": "nodejs"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      },
-      "selected": false
-    },
-    {
-      "id": "message-queue-kQs1WPzq",
-      "type": "customNode",
-      "position": {
-        "x": 1120,
-        "y": 440
+        "x": 400,
+        "y": 100
       },
       "sourcePosition": "right",
       "targetPosition": "left",
@@ -126,36 +63,82 @@
       "measured": {
         "width": 198,
         "height": 50
-      }
+      },
+      "selected": false,
+      "dragging": false
     },
     {
-      "id": "server-eVcNTQdH",
+      "id": "server-ibj4LmUy",
       "type": "customNode",
       "position": {
-        "x": 1440,
-        "y": 420
+        "x": 720,
+        "y": 0
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
-        "label": "Web Server 4",
+        "label": "Email Worker 1",
         "type": "server",
         "isActive": false,
         "flavor": "nodejs"
       },
       "measured": {
-        "width": 180,
+        "width": 181,
         "height": 50
       },
-      "selected": true,
+      "selected": false,
       "dragging": false
     },
     {
-      "id": "postgres-vGNmyZJ0",
+      "id": "server-kO24IveD",
       "type": "customNode",
       "position": {
-        "x": 1740,
-        "y": 440
+        "x": 700,
+        "y": 180
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Email Worker 2",
+        "type": "server",
+        "isActive": false,
+        "flavor": "nodejs"
+      },
+      "measured": {
+        "width": 184,
+        "height": 50
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "server-qUnvwaN1",
+      "type": "customNode",
+      "position": {
+        "x": 700,
+        "y": 300
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Email Worker 3",
+        "type": "server",
+        "isActive": false,
+        "flavor": "nodejs"
+      },
+      "measured": {
+        "width": 184,
+        "height": 50
+      },
+      "dragging": false,
+      "selected": false
+    },
+    {
+      "id": "postgres-iEZWGOls",
+      "type": "customNode",
+      "position": {
+        "x": 960,
+        "y": 120
       },
       "sourcePosition": "right",
       "targetPosition": "left",
@@ -169,120 +152,17 @@
         "width": 180,
         "height": 50
       },
-      "selected": true,
-      "dragging": false
-    },
-    {
-      "id": "redis-GH2iXlTj",
-      "type": "customNode",
-      "position": {
-        "x": 1760,
-        "y": 360
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Redis Cache 1",
-        "type": "redis",
-        "isActive": false,
-        "flavor": "redis"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      },
-      "selected": false
-    },
-    {
-      "id": "server-iv56Odma",
-      "type": "customNode",
-      "position": {
-        "x": 1480,
-        "y": 140
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Web Server 5",
-        "type": "server",
-        "isActive": false,
-        "flavor": "nodejs"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      }
-    },
-    {
-      "id": "server-qm4FvlAR",
-      "type": "customNode",
-      "position": {
-        "x": 1500,
-        "y": 260
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Web Server 6",
-        "type": "server",
-        "isActive": false,
-        "flavor": "nodejs"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      }
-    },
-    {
-      "id": "pubsub-Se7o8g8M",
-      "type": "customNode",
-      "position": {
-        "x": 1080,
-        "y": 220
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Pub/Sub Broker 1",
-        "type": "pubsub",
-        "isActive": false,
-        "flavor": "redis-pubsub"
-      },
-      "measured": {
-        "width": 197,
-        "height": 50
-      },
-      "selected": false
-    },
-    {
-      "id": "postgres-vSh2La79",
-      "type": "customNode",
-      "position": {
-        "x": 1860,
-        "y": 140
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Postgres DB 2",
-        "type": "postgres",
-        "isActive": false,
-        "flavor": "postgres"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      },
+      "dragging": false,
       "selected": false
     }
   ],
   "edges": [
     {
-      "source": "server-iv56Odma",
+      "source": "client-aq1tCpdJ",
       "sourceHandle": "right",
-      "target": "postgres-vSh2La79",
+      "target": "server-MO605Q7t",
       "targetHandle": "left",
-      "id": "server-iv56Odma-right->postgres-vSh2La79-left",
+      "id": "client-aq1tCpdJ-right->server-MO605Q7t-left",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -294,11 +174,11 @@
       }
     },
     {
-      "source": "server-qm4FvlAR",
+      "source": "server-MO605Q7t",
       "sourceHandle": "right",
-      "target": "postgres-vSh2La79",
+      "target": "message-queue-P9LCZcX3",
       "targetHandle": "left",
-      "id": "server-qm4FvlAR-right->postgres-vSh2La79-left",
+      "id": "server-MO605Q7t-right->message-queue-P9LCZcX3-left",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -310,11 +190,11 @@
       }
     },
     {
-      "source": "server-eVcNTQdH",
+      "source": "server-ibj4LmUy",
       "sourceHandle": "right",
-      "target": "redis-GH2iXlTj",
+      "target": "postgres-iEZWGOls",
       "targetHandle": "left",
-      "id": "server-eVcNTQdH-right->redis-GH2iXlTj-left",
+      "id": "server-ibj4LmUy-right->postgres-iEZWGOls-left",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -326,11 +206,11 @@
       }
     },
     {
-      "source": "server-eVcNTQdH",
+      "source": "server-kO24IveD",
       "sourceHandle": "right",
-      "target": "postgres-vGNmyZJ0",
+      "target": "postgres-iEZWGOls",
       "targetHandle": "left",
-      "id": "server-eVcNTQdH-right->postgres-vGNmyZJ0-left",
+      "id": "server-kO24IveD-right->postgres-iEZWGOls-left",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -342,11 +222,11 @@
       }
     },
     {
-      "source": "message-queue-kQs1WPzq",
+      "source": "server-qUnvwaN1",
       "sourceHandle": "right",
-      "target": "server-eVcNTQdH",
+      "target": "postgres-iEZWGOls",
       "targetHandle": "left",
-      "id": "message-queue-kQs1WPzq-right->server-eVcNTQdH-left",
+      "id": "server-qUnvwaN1-right->postgres-iEZWGOls-left",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -358,11 +238,11 @@
       }
     },
     {
-      "source": "server-tPQ0wVS8",
+      "source": "message-queue-P9LCZcX3",
       "sourceHandle": "right",
-      "target": "message-queue-kQs1WPzq",
+      "target": "server-ibj4LmUy",
       "targetHandle": "left",
-      "id": "server-tPQ0wVS8-right->message-queue-kQs1WPzq-left",
+      "id": "message-queue-P9LCZcX3-right->server-ibj4LmUy-left",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -374,11 +254,11 @@
       }
     },
     {
-      "source": "api-gateway-6n69QEts",
+      "source": "message-queue-P9LCZcX3",
       "sourceHandle": "right",
-      "target": "server-tPQ0wVS8",
+      "target": "server-kO24IveD",
       "targetHandle": "left",
-      "id": "api-gateway-6n69QEts-right->server-tPQ0wVS8-left",
+      "id": "message-queue-P9LCZcX3-right->server-kO24IveD-left",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -390,109 +270,11 @@
       }
     },
     {
-      "source": "api-gateway-6n69QEts",
+      "source": "message-queue-P9LCZcX3",
       "sourceHandle": "right",
-      "target": "server-NgXmlhch",
+      "target": "server-qUnvwaN1",
       "targetHandle": "left",
-      "id": "api-gateway-6n69QEts-right->server-NgXmlhch-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      },
-      "selected": false
-    },
-    {
-      "source": "api-gateway-6n69QEts",
-      "sourceHandle": "right",
-      "target": "server-Ya3ZmzBs",
-      "targetHandle": "left",
-      "id": "api-gateway-6n69QEts-right->server-Ya3ZmzBs-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      }
-    },
-    {
-      "source": "server-Ya3ZmzBs",
-      "sourceHandle": "right",
-      "target": "pubsub-Se7o8g8M",
-      "targetHandle": "left",
-      "id": "server-Ya3ZmzBs-right->pubsub-Se7o8g8M-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      }
-    },
-    {
-      "source": "server-NgXmlhch",
-      "sourceHandle": "right",
-      "target": "pubsub-Se7o8g8M",
-      "targetHandle": "left",
-      "id": "server-NgXmlhch-right->pubsub-Se7o8g8M-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      }
-    },
-    {
-      "source": "pubsub-Se7o8g8M",
-      "sourceHandle": "right",
-      "target": "server-iv56Odma",
-      "targetHandle": "left",
-      "id": "pubsub-Se7o8g8M-right->server-iv56Odma-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      }
-    },
-    {
-      "source": "pubsub-Se7o8g8M",
-      "sourceHandle": "right",
-      "target": "server-qm4FvlAR",
-      "targetHandle": "left",
-      "id": "pubsub-Se7o8g8M-right->server-qm4FvlAR-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      },
-      "selected": false
-    },
-    {
-      "source": "client-dzOkM6PT",
-      "sourceHandle": "right",
-      "target": "api-gateway-6n69QEts",
-      "targetHandle": "left",
-      "id": "client-dzOkM6PT-right->api-gateway-6n69QEts-left",
+      "id": "message-queue-P9LCZcX3-right->server-qUnvwaN1-left",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -505,7 +287,7 @@
     }
   ],
   "nodeConfigs": {
-    "client-dzOkM6PT": {
+    "client-aq1tCpdJ": {
       "endpoint": "/api/v1/posts",
       "method": "GET",
       "lookupKey": "rohan",
@@ -522,7 +304,7 @@
           "fileName": "file.png",
           "isThereFileToUpload": false,
           "targetBucket": "media-uploads",
-          "body": "{\n  \"topic\": \"order.created\"\n}"
+          "body": ""
         },
         {
           "endpoint": "/api/v1/posts",
@@ -530,28 +312,11 @@
           "lookupKey": "key-2",
           "fileName": "file-2.png",
           "isThereFileToUpload": true,
-          "targetBucket": "media-uploads",
-          "body": "{\n  \"topic\": \"order.created\"\n}"
-        },
-        {
-          "endpoint": "/api/v1/posts",
-          "method": "GET",
-          "lookupKey": "key-3",
-          "fileName": "file-3.png",
-          "isThereFileToUpload": true,
-          "targetBucket": "media-uploads",
-          "body": "{\n  \"topic\": \"order.created\"\n}"
+          "targetBucket": "media-uploads"
         }
       ]
     },
-    "api-gateway-6n69QEts": {
-      "strategy": "ROUND_ROBIN",
-      "routes": {
-        "/api/v1/posts": "POST_SERVICE",
-        "/api/v1/users": "USER_SERVICE"
-      }
-    },
-    "server-Ya3ZmzBs": {
+    "server-MO605Q7t": {
       "capacity": 100,
       "tcpConnections": 10,
       "prefetchLimit": 1,
@@ -579,69 +344,13 @@
         ]
       }
     },
-    "server-NgXmlhch": {
-      "capacity": 100,
-      "tcpConnections": 10,
-      "prefetchLimit": 1,
-      "endpoints": {
-        "/api/v1/posts": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ],
-        "/api/v1/users": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ],
-        "/api/v1/getData": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ]
-      }
-    },
-    "server-tPQ0wVS8": {
-      "capacity": 100,
-      "tcpConnections": 10,
-      "prefetchLimit": 1,
-      "endpoints": {
-        "/api/v1/posts": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ],
-        "/api/v1/users": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ],
-        "/api/v1/getData": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ]
-      }
-    },
-    "message-queue-kQs1WPzq": {
+    "message-queue-P9LCZcX3": {
       "processingType": "FIFO",
       "queueSize": 10,
       "overflowBehavior": "REJECT",
       "connections": {}
     },
-    "server-eVcNTQdH": {
+    "server-ibj4LmUy": {
       "capacity": 100,
       "tcpConnections": 10,
       "prefetchLimit": 1,
@@ -669,36 +378,7 @@
         ]
       }
     },
-    "postgres-vGNmyZJ0": {
-      "table": "users",
-      "data": [
-        {
-          "key": "doe",
-          "val": "db data for doe"
-        },
-        {
-          "key": "john",
-          "val": "db data for john"
-        },
-        {
-          "key": "rohan",
-          "val": "db data for rohan"
-        }
-      ]
-    },
-    "redis-GH2iXlTj": {
-      "data": [
-        {
-          "key": "rohan",
-          "val": "cached data for rohan"
-        },
-        {
-          "key": "john",
-          "val": "cached data for john"
-        }
-      ]
-    },
-    "server-iv56Odma": {
+    "server-kO24IveD": {
       "capacity": 100,
       "tcpConnections": 10,
       "prefetchLimit": 1,
@@ -726,7 +406,7 @@
         ]
       }
     },
-    "server-qm4FvlAR": {
+    "server-qUnvwaN1": {
       "capacity": 100,
       "tcpConnections": 10,
       "prefetchLimit": 1,
@@ -754,10 +434,7 @@
         ]
       }
     },
-    "pubsub-Se7o8g8M": {
-      "channels": {}
-    },
-    "postgres-vSh2La79": {
+    "postgres-iEZWGOls": {
       "table": "users",
       "data": [
         {

@@ -2,287 +2,183 @@
   "version": "1.0",
   "nodes": [
     {
-      "id": "client-dzOkM6PT",
+      "id": "client-1",
       "type": "customNode",
       "position": {
-        "x": 290.3864027048779,
-        "y": 221.95348113663542
+        "x": 40,
+        "y": 250
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
-        "label": "Browser",
+        "label": "Client Browser",
         "type": "client",
-        "isActive": false,
-        "flavor": "nextjs"
+        "flavor": "browser",
+        "isActive": false
+      },
+      "style": {
+        "borderRadius": "8px"
       },
       "measured": {
-        "width": 180,
+        "width": 182,
         "height": 50
       },
       "selected": false
     },
     {
-      "id": "api-gateway-6n69QEts",
+      "id": "srv-pub",
       "type": "customNode",
       "position": {
-        "x": 520,
-        "y": 280
+        "x": 220,
+        "y": 100
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
-        "label": "API Gateway 1",
-        "type": "api-gateway",
-        "isActive": false,
-        "flavor": "aws-apigw"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      },
-      "dragging": false,
-      "selected": false
-    },
-    {
-      "id": "server-Ya3ZmzBs",
-      "type": "customNode",
-      "position": {
-        "x": 800,
-        "y": 180
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Post",
+        "label": "App Server (Publisher)",
         "type": "server",
-        "isActive": false,
-        "flavor": "nodejs"
+        "flavor": "nodejs",
+        "isActive": false
+      },
+      "style": {
+        "borderRadius": "8px"
       },
       "measured": {
-        "width": 180,
-        "height": 50
-      },
-      "selected": false
-    },
-    {
-      "id": "server-NgXmlhch",
-      "type": "customNode",
-      "position": {
-        "x": 820,
-        "y": 280
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Post",
-        "type": "server",
-        "isActive": false,
-        "flavor": "nodejs"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      },
-      "dragging": false,
-      "selected": false
-    },
-    {
-      "id": "server-tPQ0wVS8",
-      "type": "customNode",
-      "position": {
-        "x": 820,
-        "y": 440
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Post",
-        "type": "server",
-        "isActive": false,
-        "flavor": "nodejs"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      },
-      "selected": false
-    },
-    {
-      "id": "message-queue-kQs1WPzq",
-      "type": "customNode",
-      "position": {
-        "x": 1120,
-        "y": 440
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Message Queue 1",
-        "type": "message-queue",
-        "isActive": false,
-        "flavor": "rabbitmq"
-      },
-      "measured": {
-        "width": 198,
-        "height": 50
-      }
-    },
-    {
-      "id": "server-eVcNTQdH",
-      "type": "customNode",
-      "position": {
-        "x": 1440,
-        "y": 420
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Web Server 4",
-        "type": "server",
-        "isActive": false,
-        "flavor": "nodejs"
-      },
-      "measured": {
-        "width": 180,
+        "width": 227,
         "height": 50
       },
       "selected": true,
       "dragging": false
     },
     {
-      "id": "postgres-vGNmyZJ0",
+      "id": "broker-pubsub",
       "type": "customNode",
       "position": {
-        "x": 1740,
-        "y": 440
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Postgres DB 1",
-        "type": "postgres",
-        "isActive": false,
-        "flavor": "postgres"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      },
-      "selected": true,
-      "dragging": false
-    },
-    {
-      "id": "redis-GH2iXlTj",
-      "type": "customNode",
-      "position": {
-        "x": 1760,
-        "y": 360
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Redis Cache 1",
-        "type": "redis",
-        "isActive": false,
-        "flavor": "redis"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      },
-      "selected": false
-    },
-    {
-      "id": "server-iv56Odma",
-      "type": "customNode",
-      "position": {
-        "x": 1480,
-        "y": 140
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Web Server 5",
-        "type": "server",
-        "isActive": false,
-        "flavor": "nodejs"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      }
-    },
-    {
-      "id": "server-qm4FvlAR",
-      "type": "customNode",
-      "position": {
-        "x": 1500,
+        "x": 460,
         "y": 260
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
-        "label": "Web Server 6",
-        "type": "server",
-        "isActive": false,
-        "flavor": "nodejs"
-      },
-      "measured": {
-        "width": 180,
-        "height": 50
-      }
-    },
-    {
-      "id": "pubsub-Se7o8g8M",
-      "type": "customNode",
-      "position": {
-        "x": 1080,
-        "y": 220
-      },
-      "sourcePosition": "right",
-      "targetPosition": "left",
-      "data": {
-        "label": "Pub/Sub Broker 1",
+        "label": "Redis Pub/Sub Broker",
         "type": "pubsub",
-        "isActive": false,
-        "flavor": "redis-pubsub"
+        "flavor": "redis-pubsub",
+        "isActive": false
+      },
+      "style": {
+        "borderRadius": "8px"
       },
       "measured": {
-        "width": 197,
+        "width": 225,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
+    },
+    {
+      "id": "srv-sub1",
+      "type": "customNode",
+      "position": {
+        "x": 780,
+        "y": 120
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Subscriber Server 1",
+        "type": "server",
+        "flavor": "nodejs",
+        "isActive": false
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 210,
         "height": 50
       },
       "selected": false
     },
     {
-      "id": "postgres-vSh2La79",
+      "id": "srv-sub2",
       "type": "customNode",
       "position": {
-        "x": 1860,
-        "y": 140
+        "x": 780,
+        "y": 380
       },
       "sourcePosition": "right",
       "targetPosition": "left",
       "data": {
-        "label": "Postgres DB 2",
-        "type": "postgres",
-        "isActive": false,
-        "flavor": "postgres"
+        "label": "Subscriber Server 2",
+        "type": "server",
+        "flavor": "nodejs",
+        "isActive": false
+      },
+      "style": {
+        "borderRadius": "8px"
       },
       "measured": {
-        "width": 180,
+        "width": 213,
         "height": 50
       },
       "selected": false
+    },
+    {
+      "id": "db-postgres",
+      "type": "customNode",
+      "position": {
+        "x": 1060,
+        "y": 40
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Postgres Subscriber DB",
+        "type": "postgres",
+        "flavor": "postgres",
+        "isActive": false
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 236,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
+    },
+    {
+      "id": "db-redis",
+      "type": "customNode",
+      "position": {
+        "x": 1060,
+        "y": 300
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Redis Subscriber Cache",
+        "type": "redis",
+        "flavor": "redis",
+        "isActive": false
+      },
+      "style": {
+        "borderRadius": "8px"
+      },
+      "measured": {
+        "width": 236,
+        "height": 50
+      },
+      "selected": true,
+      "dragging": false
     }
   ],
   "edges": [
     {
-      "source": "server-iv56Odma",
-      "sourceHandle": "right",
-      "target": "postgres-vSh2La79",
-      "targetHandle": "left",
-      "id": "server-iv56Odma-right->postgres-vSh2La79-left",
+      "id": "client-1->srv-pub",
+      "source": "client-1",
+      "target": "srv-pub",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -294,11 +190,9 @@
       }
     },
     {
-      "source": "server-qm4FvlAR",
-      "sourceHandle": "right",
-      "target": "postgres-vSh2La79",
-      "targetHandle": "left",
-      "id": "server-qm4FvlAR-right->postgres-vSh2La79-left",
+      "id": "srv-pub->broker-pubsub",
+      "source": "srv-pub",
+      "target": "broker-pubsub",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -310,11 +204,9 @@
       }
     },
     {
-      "source": "server-eVcNTQdH",
-      "sourceHandle": "right",
-      "target": "redis-GH2iXlTj",
-      "targetHandle": "left",
-      "id": "server-eVcNTQdH-right->redis-GH2iXlTj-left",
+      "id": "broker-pubsub->srv-sub1",
+      "source": "broker-pubsub",
+      "target": "srv-sub1",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -326,11 +218,9 @@
       }
     },
     {
-      "source": "server-eVcNTQdH",
-      "sourceHandle": "right",
-      "target": "postgres-vGNmyZJ0",
-      "targetHandle": "left",
-      "id": "server-eVcNTQdH-right->postgres-vGNmyZJ0-left",
+      "id": "broker-pubsub->srv-sub2",
+      "source": "broker-pubsub",
+      "target": "srv-sub2",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -342,11 +232,9 @@
       }
     },
     {
-      "source": "message-queue-kQs1WPzq",
-      "sourceHandle": "right",
-      "target": "server-eVcNTQdH",
-      "targetHandle": "left",
-      "id": "message-queue-kQs1WPzq-right->server-eVcNTQdH-left",
+      "id": "srv-sub1->db-postgres",
+      "source": "srv-sub1",
+      "target": "db-postgres",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -358,141 +246,9 @@
       }
     },
     {
-      "source": "server-tPQ0wVS8",
-      "sourceHandle": "right",
-      "target": "message-queue-kQs1WPzq",
-      "targetHandle": "left",
-      "id": "server-tPQ0wVS8-right->message-queue-kQs1WPzq-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      }
-    },
-    {
-      "source": "api-gateway-6n69QEts",
-      "sourceHandle": "right",
-      "target": "server-tPQ0wVS8",
-      "targetHandle": "left",
-      "id": "api-gateway-6n69QEts-right->server-tPQ0wVS8-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      }
-    },
-    {
-      "source": "api-gateway-6n69QEts",
-      "sourceHandle": "right",
-      "target": "server-NgXmlhch",
-      "targetHandle": "left",
-      "id": "api-gateway-6n69QEts-right->server-NgXmlhch-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      },
-      "selected": false
-    },
-    {
-      "source": "api-gateway-6n69QEts",
-      "sourceHandle": "right",
-      "target": "server-Ya3ZmzBs",
-      "targetHandle": "left",
-      "id": "api-gateway-6n69QEts-right->server-Ya3ZmzBs-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      }
-    },
-    {
-      "source": "server-Ya3ZmzBs",
-      "sourceHandle": "right",
-      "target": "pubsub-Se7o8g8M",
-      "targetHandle": "left",
-      "id": "server-Ya3ZmzBs-right->pubsub-Se7o8g8M-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      }
-    },
-    {
-      "source": "server-NgXmlhch",
-      "sourceHandle": "right",
-      "target": "pubsub-Se7o8g8M",
-      "targetHandle": "left",
-      "id": "server-NgXmlhch-right->pubsub-Se7o8g8M-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      }
-    },
-    {
-      "source": "pubsub-Se7o8g8M",
-      "sourceHandle": "right",
-      "target": "server-iv56Odma",
-      "targetHandle": "left",
-      "id": "pubsub-Se7o8g8M-right->server-iv56Odma-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      }
-    },
-    {
-      "source": "pubsub-Se7o8g8M",
-      "sourceHandle": "right",
-      "target": "server-qm4FvlAR",
-      "targetHandle": "left",
-      "id": "pubsub-Se7o8g8M-right->server-qm4FvlAR-left",
-      "type": "packet",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "color": "#60a5fa"
-      },
-      "style": {
-        "stroke": "#475569",
-        "strokeWidth": 1.8
-      },
-      "selected": false
-    },
-    {
-      "source": "client-dzOkM6PT",
-      "sourceHandle": "right",
-      "target": "api-gateway-6n69QEts",
-      "targetHandle": "left",
-      "id": "client-dzOkM6PT-right->api-gateway-6n69QEts-left",
+      "id": "srv-sub2->db-redis",
+      "source": "srv-sub2",
+      "target": "db-redis",
       "type": "packet",
       "markerEnd": {
         "type": "arrowclosed",
@@ -505,7 +261,7 @@
     }
   ],
   "nodeConfigs": {
-    "client-dzOkM6PT": {
+    "client-1": {
       "endpoint": "/api/v1/posts",
       "method": "GET",
       "lookupKey": "rohan",
@@ -532,26 +288,10 @@
           "isThereFileToUpload": true,
           "targetBucket": "media-uploads",
           "body": "{\n  \"topic\": \"order.created\"\n}"
-        },
-        {
-          "endpoint": "/api/v1/posts",
-          "method": "GET",
-          "lookupKey": "key-3",
-          "fileName": "file-3.png",
-          "isThereFileToUpload": true,
-          "targetBucket": "media-uploads",
-          "body": "{\n  \"topic\": \"order.created\"\n}"
         }
       ]
     },
-    "api-gateway-6n69QEts": {
-      "strategy": "ROUND_ROBIN",
-      "routes": {
-        "/api/v1/posts": "POST_SERVICE",
-        "/api/v1/users": "USER_SERVICE"
-      }
-    },
-    "server-Ya3ZmzBs": {
+    "srv-pub": {
       "capacity": 100,
       "tcpConnections": 10,
       "prefetchLimit": 1,
@@ -579,7 +319,10 @@
         ]
       }
     },
-    "server-NgXmlhch": {
+    "broker-pubsub": {
+      "channels": {}
+    },
+    "srv-sub1": {
       "capacity": 100,
       "tcpConnections": 10,
       "prefetchLimit": 1,
@@ -607,7 +350,7 @@
         ]
       }
     },
-    "server-tPQ0wVS8": {
+    "srv-sub2": {
       "capacity": 100,
       "tcpConnections": 10,
       "prefetchLimit": 1,
@@ -635,41 +378,7 @@
         ]
       }
     },
-    "message-queue-kQs1WPzq": {
-      "processingType": "FIFO",
-      "queueSize": 10,
-      "overflowBehavior": "REJECT",
-      "connections": {}
-    },
-    "server-eVcNTQdH": {
-      "capacity": 100,
-      "tcpConnections": 10,
-      "prefetchLimit": 1,
-      "endpoints": {
-        "/api/v1/posts": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ],
-        "/api/v1/users": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ],
-        "/api/v1/getData": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ]
-      }
-    },
-    "postgres-vGNmyZJ0": {
+    "db-postgres": {
       "table": "users",
       "data": [
         {
@@ -686,7 +395,7 @@
         }
       ]
     },
-    "redis-GH2iXlTj": {
+    "db-redis": {
       "data": [
         {
           "key": "rohan",
@@ -695,82 +404,6 @@
         {
           "key": "john",
           "val": "cached data for john"
-        }
-      ]
-    },
-    "server-iv56Odma": {
-      "capacity": 100,
-      "tcpConnections": 10,
-      "prefetchLimit": 1,
-      "endpoints": {
-        "/api/v1/posts": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ],
-        "/api/v1/users": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ],
-        "/api/v1/getData": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ]
-      }
-    },
-    "server-qm4FvlAR": {
-      "capacity": 100,
-      "tcpConnections": 10,
-      "prefetchLimit": 1,
-      "endpoints": {
-        "/api/v1/posts": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ],
-        "/api/v1/users": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ],
-        "/api/v1/getData": [
-          "GET",
-          "POST",
-          "PUT",
-          "DELETE",
-          "PATCH"
-        ]
-      }
-    },
-    "pubsub-Se7o8g8M": {
-      "channels": {}
-    },
-    "postgres-vSh2La79": {
-      "table": "users",
-      "data": [
-        {
-          "key": "doe",
-          "val": "db data for doe"
-        },
-        {
-          "key": "john",
-          "val": "db data for john"
-        },
-        {
-          "key": "rohan",
-          "val": "db data for rohan"
         }
       ]
     }
