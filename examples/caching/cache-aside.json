@@ -1,0 +1,91 @@
+{
+  "version": "1.0",
+  "nodes": [
+    {
+      "id": "client-1",
+      "type": "customNode",
+      "position": {
+        "x": 40,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Client Web App",
+        "type": "client"
+      }
+    },
+    {
+      "id": "server-1",
+      "type": "customNode",
+      "position": {
+        "x": 280,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "API Server",
+        "type": "server"
+      }
+    },
+    {
+      "id": "redis-1",
+      "type": "customNode",
+      "position": {
+        "x": 560,
+        "y": 110
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Redis Cache Cluster",
+        "type": "redis"
+      }
+    },
+    {
+      "id": "db-1",
+      "type": "customNode",
+      "position": {
+        "x": 560,
+        "y": 380
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Postgres Main Database",
+        "type": "postgres"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c-s",
+      "source": "client-1",
+      "target": "server-1",
+      "type": "packet"
+    },
+    {
+      "id": "s-r",
+      "source": "server-1",
+      "target": "redis-1",
+      "type": "packet"
+    },
+    {
+      "id": "s-d",
+      "source": "server-1",
+      "target": "db-1",
+      "type": "packet"
+    }
+  ],
+  "nodeConfigs": {
+    "redis-1": {
+      "data": [
+        {
+          "key": "user_1",
+          "val": "cached_account_details"
+        }
+      ]
+    }
+  }
+}

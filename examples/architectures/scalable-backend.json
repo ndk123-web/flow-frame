@@ -1,0 +1,244 @@
+{
+  "version": "1.0",
+  "nodes": [
+    {
+      "id": "client-1",
+      "type": "customNode",
+      "position": {
+        "x": 40,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Client Browser",
+        "type": "client"
+      }
+    },
+    {
+      "id": "cdn-1",
+      "type": "customNode",
+      "position": {
+        "x": 220,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Cloudflare CDN Edge",
+        "type": "api-gateway"
+      }
+    },
+    {
+      "id": "lb-1",
+      "type": "customNode",
+      "position": {
+        "x": 400,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "AWS AL Load Balancer",
+        "type": "load-balancer"
+      }
+    },
+    {
+      "id": "srv-1",
+      "type": "customNode",
+      "position": {
+        "x": 580,
+        "y": 90
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Web App Server 1",
+        "type": "server"
+      }
+    },
+    {
+      "id": "srv-2",
+      "type": "customNode",
+      "position": {
+        "x": 580,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Web App Server 2",
+        "type": "server"
+      }
+    },
+    {
+      "id": "srv-3",
+      "type": "customNode",
+      "position": {
+        "x": 580,
+        "y": 410
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Web App Server 3",
+        "type": "server"
+      }
+    },
+    {
+      "id": "cache-m",
+      "type": "customNode",
+      "position": {
+        "x": 820,
+        "y": 90
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Redis Master",
+        "type": "redis"
+      }
+    },
+    {
+      "id": "cache-r",
+      "type": "customNode",
+      "position": {
+        "x": 980,
+        "y": 90
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Redis Replica",
+        "type": "redis"
+      }
+    },
+    {
+      "id": "db-m",
+      "type": "customNode",
+      "position": {
+        "x": 820,
+        "y": 360
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Postgres Master (Write)",
+        "type": "postgres"
+      }
+    },
+    {
+      "id": "db-r",
+      "type": "customNode",
+      "position": {
+        "x": 980,
+        "y": 360
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Postgres Replica (Read)",
+        "type": "postgres"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c-cdn",
+      "source": "client-1",
+      "target": "cdn-1",
+      "type": "packet"
+    },
+    {
+      "id": "cdn-lb",
+      "source": "cdn-1",
+      "target": "lb-1",
+      "type": "packet"
+    },
+    {
+      "id": "lb-s1",
+      "source": "lb-1",
+      "target": "srv-1",
+      "type": "packet"
+    },
+    {
+      "id": "lb-s2",
+      "source": "lb-1",
+      "target": "srv-2",
+      "type": "packet"
+    },
+    {
+      "id": "lb-s3",
+      "source": "lb-1",
+      "target": "srv-3",
+      "type": "packet"
+    },
+    {
+      "id": "s1-cm",
+      "source": "srv-1",
+      "target": "cache-m",
+      "type": "packet"
+    },
+    {
+      "id": "s2-cm",
+      "source": "srv-2",
+      "target": "cache-m",
+      "type": "packet"
+    },
+    {
+      "id": "s3-cm",
+      "source": "srv-3",
+      "target": "cache-m",
+      "type": "packet"
+    },
+    {
+      "id": "s1-dm",
+      "source": "srv-1",
+      "target": "db-m",
+      "type": "packet"
+    },
+    {
+      "id": "s2-dm",
+      "source": "srv-2",
+      "target": "db-m",
+      "type": "packet"
+    },
+    {
+      "id": "s3-dm",
+      "source": "srv-3",
+      "target": "db-m",
+      "type": "packet"
+    },
+    {
+      "id": "cm-cr",
+      "source": "cache-m",
+      "target": "cache-r",
+      "type": "packet"
+    },
+    {
+      "id": "dm-dr",
+      "source": "db-m",
+      "target": "db-r",
+      "type": "packet"
+    },
+    {
+      "id": "s1-dr",
+      "source": "srv-1",
+      "target": "db-r",
+      "type": "packet"
+    },
+    {
+      "id": "s2-dr",
+      "source": "srv-2",
+      "target": "db-r",
+      "type": "packet"
+    },
+    {
+      "id": "s3-dr",
+      "source": "srv-3",
+      "target": "db-r",
+      "type": "packet"
+    }
+  ],
+  "nodeConfigs": {}
+}

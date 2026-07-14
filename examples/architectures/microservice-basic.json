@@ -1,0 +1,170 @@
+{
+  "version": "1.0",
+  "nodes": [
+    {
+      "id": "client-1",
+      "type": "customNode",
+      "position": {
+        "x": 50,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Client Browser",
+        "type": "client"
+      }
+    },
+    {
+      "id": "gateway-1",
+      "type": "customNode",
+      "position": {
+        "x": 260,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Kong API Gateway",
+        "type": "api-gateway"
+      }
+    },
+    {
+      "id": "auth-srv",
+      "type": "customNode",
+      "position": {
+        "x": 500,
+        "y": 90
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Auth Service",
+        "type": "server"
+      }
+    },
+    {
+      "id": "user-srv",
+      "type": "customNode",
+      "position": {
+        "x": 500,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "User Service",
+        "type": "server"
+      }
+    },
+    {
+      "id": "order-srv",
+      "type": "customNode",
+      "position": {
+        "x": 500,
+        "y": 410
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Order Service",
+        "type": "server"
+      }
+    },
+    {
+      "id": "auth-cache",
+      "type": "customNode",
+      "position": {
+        "x": 740,
+        "y": 90
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Redis Session Store",
+        "type": "redis"
+      }
+    },
+    {
+      "id": "user-db",
+      "type": "customNode",
+      "position": {
+        "x": 740,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "User Postgres DB",
+        "type": "postgres"
+      }
+    },
+    {
+      "id": "order-db",
+      "type": "customNode",
+      "position": {
+        "x": 740,
+        "y": 410
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Order Postgres DB",
+        "type": "postgres"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c-g",
+      "source": "client-1",
+      "target": "gateway-1",
+      "type": "packet"
+    },
+    {
+      "id": "g-as",
+      "source": "gateway-1",
+      "target": "auth-srv",
+      "type": "packet"
+    },
+    {
+      "id": "g-us",
+      "source": "gateway-1",
+      "target": "user-srv",
+      "type": "packet"
+    },
+    {
+      "id": "g-os",
+      "source": "gateway-1",
+      "target": "order-srv",
+      "type": "packet"
+    },
+    {
+      "id": "as-ac",
+      "source": "auth-srv",
+      "target": "auth-cache",
+      "type": "packet"
+    },
+    {
+      "id": "us-udb",
+      "source": "user-srv",
+      "target": "user-db",
+      "type": "packet"
+    },
+    {
+      "id": "os-odb",
+      "source": "order-srv",
+      "target": "order-db",
+      "type": "packet"
+    }
+  ],
+  "nodeConfigs": {
+    "gateway-1": {
+      "routes": {
+        "/auth": "auth-srv",
+        "/users": "user-srv",
+        "/orders": "order-srv"
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "version": "1.0",
+  "nodes": [
+    {
+      "id": "client-1",
+      "type": "customNode",
+      "position": {
+        "x": 40,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "User Browser",
+        "type": "client"
+      }
+    },
+    {
+      "id": "lb-1",
+      "type": "customNode",
+      "position": {
+        "x": 220,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Redirect Load Balancer",
+        "type": "load-balancer"
+      }
+    },
+    {
+      "id": "srv-1",
+      "type": "customNode",
+      "position": {
+        "x": 420,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "URL Shortener Server",
+        "type": "server"
+      }
+    },
+    {
+      "id": "redis-1",
+      "type": "customNode",
+      "position": {
+        "x": 640,
+        "y": 110
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Redis Redirect Memory Cache",
+        "type": "redis"
+      }
+    },
+    {
+      "id": "db-1",
+      "type": "customNode",
+      "position": {
+        "x": 640,
+        "y": 390
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Postgres Hash Source DB",
+        "type": "postgres"
+      }
+    },
+    {
+      "id": "mq-1",
+      "type": "customNode",
+      "position": {
+        "x": 860,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Analytics Log Queue",
+        "type": "message-queue"
+      }
+    },
+    {
+      "id": "worker-1",
+      "type": "customNode",
+      "position": {
+        "x": 1080,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Click Logger Worker",
+        "type": "server"
+      }
+    },
+    {
+      "id": "db-analytics",
+      "type": "customNode",
+      "position": {
+        "x": 1300,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Clickhouse Analytics DB",
+        "type": "postgres"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c-lb",
+      "source": "client-1",
+      "target": "lb-1",
+      "type": "packet"
+    },
+    {
+      "id": "lb-s",
+      "source": "lb-1",
+      "target": "srv-1",
+      "type": "packet"
+    },
+    {
+      "id": "s-r",
+      "source": "srv-1",
+      "target": "redis-1",
+      "type": "packet"
+    },
+    {
+      "id": "s-d",
+      "source": "srv-1",
+      "target": "db-1",
+      "type": "packet"
+    },
+    {
+      "id": "s-q",
+      "source": "srv-1",
+      "target": "mq-1",
+      "type": "packet"
+    },
+    {
+      "id": "q-w",
+      "source": "mq-1",
+      "target": "worker-1",
+      "type": "packet"
+    },
+    {
+      "id": "w-da",
+      "source": "worker-1",
+      "target": "db-analytics",
+      "type": "packet"
+    }
+  ],
+  "nodeConfigs": {}
+}

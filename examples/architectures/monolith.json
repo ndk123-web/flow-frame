@@ -1,0 +1,174 @@
+{
+  "version": "1.0",
+  "nodes": [
+    {
+      "id": "client-1",
+      "type": "customNode",
+      "position": {
+        "x": 50,
+        "y": 250
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Client 1",
+        "type": "client"
+      }
+    },
+    {
+      "id": "client-2",
+      "type": "customNode",
+      "position": {
+        "x": 50,
+        "y": 390
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Client 2",
+        "type": "client"
+      }
+    },
+    {
+      "id": "lb-1",
+      "type": "customNode",
+      "position": {
+        "x": 240,
+        "y": 320
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Load Balancer / Nginx",
+        "type": "load-balancer"
+      }
+    },
+    {
+      "id": "server-1",
+      "type": "customNode",
+      "position": {
+        "x": 460,
+        "y": 320
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Monolithic Server",
+        "type": "server"
+      }
+    },
+    {
+      "id": "redis-1",
+      "type": "customNode",
+      "position": {
+        "x": 700,
+        "y": 120
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Redis Session Cache",
+        "type": "redis"
+      }
+    },
+    {
+      "id": "db-1",
+      "type": "customNode",
+      "position": {
+        "x": 700,
+        "y": 320
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Postgres Primary DB",
+        "type": "postgres"
+      }
+    },
+    {
+      "id": "elastic-1",
+      "type": "customNode",
+      "position": {
+        "x": 940,
+        "y": 420
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "Elasticsearch Cluster",
+        "type": "postgres"
+      }
+    },
+    {
+      "id": "sendgrid-1",
+      "type": "customNode",
+      "position": {
+        "x": 940,
+        "y": 220
+      },
+      "sourcePosition": "right",
+      "targetPosition": "left",
+      "data": {
+        "label": "SendGrid API Gateway",
+        "type": "server"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "c1-lb",
+      "source": "client-1",
+      "target": "lb-1",
+      "type": "packet"
+    },
+    {
+      "id": "c2-lb",
+      "source": "client-2",
+      "target": "lb-1",
+      "type": "packet"
+    },
+    {
+      "id": "lb-s",
+      "source": "lb-1",
+      "target": "server-1",
+      "type": "packet"
+    },
+    {
+      "id": "s-r",
+      "source": "server-1",
+      "target": "redis-1",
+      "type": "packet"
+    },
+    {
+      "id": "s-d",
+      "source": "server-1",
+      "target": "db-1",
+      "type": "packet"
+    },
+    {
+      "id": "s-e",
+      "source": "server-1",
+      "target": "elastic-1",
+      "type": "packet"
+    },
+    {
+      "id": "s-sg",
+      "source": "server-1",
+      "target": "sendgrid-1",
+      "type": "packet"
+    }
+  ],
+  "nodeConfigs": {
+    "server-1": {
+      "capacity": 100
+    },
+    "db-1": {
+      "data": [
+        {
+          "key": "account_1",
+          "val": "active"
+        }
+      ]
+    }
+  }
+}
