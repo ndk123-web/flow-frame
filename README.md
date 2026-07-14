@@ -1,6 +1,6 @@
 # FlowFrame Technical Documentation
 
-![FlowFrame Logo](/public/flow-frame-dark.png)
+<img src="/public/flow-frame-dark.png" alt="FlowFrame Logo" width="280" height="auto" />
 
 This directory contains the user manuals, component references, and distributed system simulation specifications for the FlowFrame sandbox.
 
