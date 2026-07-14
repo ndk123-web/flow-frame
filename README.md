@@ -1,25 +1,27 @@
 # FlowFrame Technical Documentation
 
-This directory contains the technical documentation, design specifications, and simulation reference guides for the FlowFrame workspace.
+![FlowFrame Logo](../client/public/logo/flow-frame-dark.png)
+
+This directory contains the user manuals, component references, and distributed system simulation specifications for the FlowFrame sandbox.
 
 ## Documentation Index
 
 1. **Getting Started** - [getting-started.md](getting-started.md)
-   System requirements, environment setup, local installation, and development server execution.
+   How to load architecture templates and run interactive simulations in the sandbox.
 2. **Workspace Canvas Guide** - [workspace.md](workspace.md)
-   Detailed usage instructions for the drag and drop canvas, custom handles, and inspectors.
+   Instructions for working with the drag-and-drop workspace grid, nodes, and inspectors.
 3. **Interactive Learning** - [learn.md](learn.md)
-   Structure of scenario-based challenges and the concept glossary indexes.
+   Overview of scenario-based challenges and glossary concept indexes.
 4. **Simulation Engine** - [simulation-engine.md](simulation-engine.md)
-   Asynchronous event processing, packet traversal math, and state timeline playback.
+   Technical details of packet routing, queue scheduling, and frame playback.
 5. **Serialization & Share** - [import-export.md](import-export.md)
-   JSON topology schema design, diagram image captures, and local import files.
+   Overview of local JSON file saving, sharing templates, and PNG diagram captures.
 6. **Workspace Key Shortcuts** - [keyboard-shortcuts.md](keyboard-shortcuts.md)
-   Keyboard commands for quick canvas node management.
+   Keyboard mappings for quick node control and timeline management.
 
-## Reference Directories
+## Reference Subdirectories
 
-- **architecture/** - Architectural overview of page layouts, state orchestration, and animation flows.
-- **components/** - Technical specs of database, messaging, gateway, and routing components.
-- **patterns/** - Distributed patterns implementations (Cache-Aside, Write-Through, Event-Driven).
-- **releases/** - Version release notes and development roadmaps.
+- **architecture/** - Details of state orchestration, coordinate conversions, and packet animation lifecycles.
+- **components/** - Specifications of system nodes (API Gateway, Load Balancer, Redis, Postgres Pools).
+- **patterns/** - Implementation logic of distributed patterns (Cache-Aside, Event-Driven, Microservices).
+- **releases/** - Project release logs from v1.0.0 to v1.0.5.

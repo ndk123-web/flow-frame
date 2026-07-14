@@ -1,47 +1,26 @@
-# Getting Started
+# Getting Started with FlowFrame
 
-Follow these steps to set up and run FlowFrame locally.
+FlowFrame is an interactive visual simulator for designing and testing distributed system topologies. This guide covers how to load architectures and execute your first simulation.
 
-## Prerequisites
+## Accessing the Sandbox
 
-Ensure you have the following runtime engines installed:
-- Node.js (v18 or higher) or Bun (v1.0 or higher)
-- Git
+1. Open the FlowFrame application in your web browser (hosted at your deployment domain or local server).
+2. Navigate to the **Sandbox** page by clicking **Open Sandbox** from the home screen.
 
-## Installation
+## Importing a System Design Template
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ndk123-web/flowframe.git
-   cd flowframe/client
-   ```
+This repository contains pre-configured distributed architectures inside the `examples/` directory.
 
-2. Install dependencies:
-   ```bash
-   # Using npm
-   npm install
-   # Or using Bun
-   bun install
-   ```
+To load an example template into your visual workspace:
+1. Navigate to the `examples/` folder of this repository in your file explorer or copy the contents of the desired `.json` file.
+2. In the FlowFrame workspace sidebar footer, click the **Import** button.
+3. Select the target example JSON file (for example, `examples/caching/cache-aside.json`).
+4. The sandbox canvas will immediately populate with the configured nodes, labels, and connection routes.
 
-## Development Execution
+## Running Your First Simulation
 
-Run the local development server:
-```bash
-# Using npm
-npm run dev
-# Or using Bun
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your web browser to access the application.
-
-## Static Building
-
-Validate TypeScript rules and compile static production build pages:
-```bash
-# Using npm
-npm run build
-# Or using Bun
-bun run build
-```
+1. Once a template loads, click the **Play** button on the bottom timeline panel.
+2. You will see request packets (cyan dots) spawn from Client nodes and flow along the routing lines to Load Balancers, API Gateways, and backend servers.
+3. Watch the logs terminal output database write logs, cache hits, or gateway routing statuses.
+4. Click **Pause** or use the **Step-Seek** arrow buttons to analyze flow behavior frame-by-frame.
+5. Select any node (such as a server or database) to inspect real-time metrics, connection pool queues, or cache status keys in the right sidebar panel.
