@@ -1,0 +1,6 @@
+/src 
+/app 
+/.vscode
+
+.env 
+*.env 
