@@ -2,6 +2,27 @@
 
 FlowFrame DSL (`.flow`) is a declarative domain-specific language designed to construct, visualize, and simulate distributed system architectures. It allows developers to define infrastructure nodes, configure operational parameters, and declare network topologies for execution within the FlowFrame simulation engine.
 
+## Table of Contents
+
+- [1. Core Syntax Rules](#1-core-syntax-rules)
+  - [Node Definitions](#node-definitions)
+  - [Connections](#connections)
+- [2. Supported Node Types & Configuration Schemas](#2-supported-node-types--configuration-schemas)
+  - [CLIENT](#client)
+  - [SERVER](#server)
+  - [GATEWAY (API Gateway)](#gateway-api-gateway)
+  - [LOADBALANCER](#loadbalancer)
+  - [REDIS](#redis)
+  - [POSTGRES](#postgres)
+  - [MESSAGEQUEUE](#messagequeue)
+  - [PUBSUB](#pubsub)
+- [3. Architecture Blueprint Examples](#3-architecture-blueprint-examples)
+  - [Example 1: Basic API Gateway Routing](#example-1-basic-api-gateway-routing)
+  - [Example 2: Cache-Aside Architecture (Redis + Postgres)](#example-2-cache-aside-architecture-redis--postgres)
+  - [Example 3: Asynchronous Message Queue](#example-3-asynchronous-message-queue)
+  - [Example 4: Event-Driven PubSub Fan-Out](#example-4-event-driven-pubsub-fan-out)
+- [4. Error Diagnostics](#4-error-diagnostics)
+
 ---
 
 ## 1. Core Syntax Rules
